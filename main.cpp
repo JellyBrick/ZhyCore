@@ -1,37 +1,30 @@
 #include <iostream>
 #include <stdlib.h>
 #include <winsock2.h>
-#include <thread>
+#include "threadpool.h"
+#define workernum 100;
 using namespace std;
-void test(){
-}
-class ZhyUDPServer{
-
+class UDPWorker : public ThreadPoolWorker
+{
 private:
-    int test1=999;
-    string test2="666";
-    std::thread th();
+	unsigned long pos;
+	unsigned long samples;
 public:
-    ZhyUDPServer(){
-
-    }
-    void StartThread(){
-
-//th.join();
-cout<<"This is from a class"+test2;
-    }
-void run(){
-    WSADATA wsa;
-cout<<"this is from a t::thread::hread"<<endl;
-cout<<(WSAStartup(MAKEWORD(2,2),&wsa)==0?"³É¹¦":"Ê§°Ü");
-
-}
+	UDPWorker(void)  { }
+	void operator()()
+	{
+		cout<<"test";
+	}
 };
-
-
 int main()
-{ZhyUDPServer UDP;
-UDP.StartThread();
+{
+ThreadPool pool=ThreadPool(4);
+
+for(int i=0;i<5;i++){
+   pool.enqueueWork(new UDPWorker());
+}
+
+
     system("pause");
     return 0;
 }
