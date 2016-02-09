@@ -1,28 +1,32 @@
 #include <iostream>
 #include <stdlib.h>
-#include <winsock2.h>
+#include "src/raknet/lib/udp_socket.h"
+#include "src/raknet/lib/udp_packet.h"
 #include "threadpool.h"
 #define workernum 100;
 using namespace std;
+ThreadPool TotalPool=ThreadPool(4);
+short port=888;
+udp_socket udp_socket(port);
 class UDPWorker : public ThreadPoolWorker
 {
-private:
-	unsigned long pos;
-	unsigned long samples;
 public:
 	UDPWorker(void)  { }
 	void operator()()
 	{
-		cout<<"test";
+
+while(true){
+	std::shared_ptr<udp_packet> packet = udp_socket.receive();
+	//if(packet!=NULL)
+		std::cout << packet->get_data() << std::endl;
+}
 	}
 };
 int main()
 {
-ThreadPool pool=ThreadPool(4);
 
-for(int i=0;i<5;i++){
-   pool.enqueueWork(new UDPWorker());
-}
+   TotalPool.enqueueWork(new UDPWorker());
+
 
 
     system("pause");
