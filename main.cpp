@@ -23,7 +23,7 @@ cout<<"This is from a class"+test2;
 void run(){
     WSADATA wsa;
 cout<<"this is from a t::thread::hread"<<endl;
-cout<<(WSAStartup(MAKEWORD(2,2),&wsa)==0?"成功":"失败");“C++开发效率低，那是新手的说法”
+cout<<(WSAStartup(MAKEWORD(2,2),&wsa)==0?"成功":"失败");
 
 }
 };
