@@ -5,8 +5,9 @@
 #include <iostream>
 #include <cstdint>
 #include "udp_packet.h"
+#include <stdio.h>
 
-
+#define MAX_BUFF 2048
 
 udp_socket::udp_socket() : udp_socket(0) {
 
@@ -48,27 +49,21 @@ void udp_socket::send_to(unsigned int a, unsigned int b, unsigned int c, unsigne
 }
 
 std::shared_ptr<udp_packet> udp_socket::receive() {
-    uint8_t packet_data[1500];
-memset(packet_data,0,sizeof(packet_data));
-    unsigned int max_packet_size = sizeof(packet_data);
-
+    	 char packet_data[MAX_BUFF];
+		// memset(packet_data, '\0', MAX_BUFF);
     sockaddr_in from;
     socklen_t fromLength = sizeof(from);
     int bytes=0;
-do{
+
   bytes = recvfrom(_handle,
-                         (char *) packet_data,
-                         max_packet_size,
+                        packet_data,
+                         MAX_BUFF,
                          0,
                          (sockaddr *) &from,
                          &fromLength);
-//std::cout<<bytes<<std::endl;
-}
-    while (bytes <= 0);
 
     unsigned int from_address = ntohl(from.sin_addr.s_addr);
-
     unsigned int from_port = ntohs(from.sin_port);
-    return std::shared_ptr<udp_packet>(new udp_packet("host", from_port, (const char *) packet_data, bytes));
+    return std::shared_ptr<udp_packet>(new udp_packet("host", from_port, (char *)packet_data, bytes));
 }
 

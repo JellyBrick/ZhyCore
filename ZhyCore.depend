@@ -1,0 +1,57 @@
+# depslib dependency file v1.0
+1455048798 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\cross_platform_socket.cpp
+	"cross_platform_socket.h"
+
+1455126999 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\cross_platform_socket.h
+	<winsock2.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<fcntl.h>
+
+1455009739 source:c:\users\administrator\desktop\zcore\zhycore\threadpool.cpp
+	<stdlib.h>
+	<stdio.h>
+	<unistd.h>
+	<assert.h>
+	"threadpool.h"
+
+1455009767 c:\users\administrator\desktop\zcore\zhycore\threadpool.h
+	<pthread.h>
+	<semaphore.h>
+	<queue>
+	<vector>
+
+1455126951 source:c:\users\administrator\desktop\zcore\zhycore\main.cpp
+	<iostream>
+	<stdlib.h>
+	<stdio.h>
+	"src/raknet/lib/udp_socket.h"
+	"src/raknet/lib/udp_packet.h"
+	"threadpool.h"
+	<string>
+	<cstring>
+
+1455126997 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udp_socket.h
+	<memory>
+
+1455126983 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udp_packet.h
+	<string>
+	<cstdint>
+
+1455126964 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udp_packet.cpp
+	"udp_packet.h"
+	"string.h"
+	<iostream>
+
+1455126990 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udp_socket.cpp
+	"udp_socket.h"
+	"cross_platform_socket.h"
+	"socket_exception.h"
+	<iostream>
+	<cstdint>
+	"udp_packet.h"
+	<stdio.h>
+
+1417003772 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\socket_exception.h
+	<exception>
+
