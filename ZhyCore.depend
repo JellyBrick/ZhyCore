@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1455048798 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\cross_platform_socket.cpp
+1455186092 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\cross_platform_socket.cpp
 	"cross_platform_socket.h"
 
 1455126999 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\cross_platform_socket.h
@@ -21,29 +21,31 @@
 	<queue>
 	<vector>
 
-1455126951 source:c:\users\administrator\desktop\zcore\zhycore\main.cpp
+1455192605 source:c:\users\administrator\desktop\zcore\zhycore\main.cpp
 	<iostream>
 	<stdlib.h>
 	<stdio.h>
-	"src/raknet/lib/udp_socket.h"
-	"src/raknet/lib/udp_packet.h"
-	"threadpool.h"
+	"src/raknet/lib/udpsocket.h"
+	"src/raknet/lib/udppacket.h"
+	"include/Debuger.h"
+	"src/scheduler/threadpool.h"
 	<string>
 	<cstring>
+	"include/SessionManager.h"
 
-1455126997 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udp_socket.h
+1455179236 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udp_socket.h
 	<memory>
 
-1455126983 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udp_packet.h
+1455184938 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udp_packet.h
 	<string>
 	<cstdint>
 
-1455126964 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udp_packet.cpp
+1455178276 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udp_packet.cpp
 	"udp_packet.h"
 	"string.h"
 	<iostream>
 
-1455126990 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udp_socket.cpp
+1455184556 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udp_socket.cpp
 	"udp_socket.h"
 	"cross_platform_socket.h"
 	"socket_exception.h"
@@ -54,4 +56,91 @@
 
 1417003772 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\socket_exception.h
 	<exception>
+
+1455175240 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\sessionmanager.cpp
+
+1455009739 source:c:\users\administrator\desktop\zcore\zhycore\src\scheduler\threadpool.cpp
+	<stdlib.h>
+	<stdio.h>
+	<unistd.h>
+	<assert.h>
+	"threadpool.h"
+
+1455009767 c:\users\administrator\desktop\zcore\zhycore\src\scheduler\threadpool.h
+	<pthread.h>
+	<semaphore.h>
+	<queue>
+	<vector>
+
+1455182663 c:\users\administrator\desktop\zcore\zhycore\include\debuger.h
+
+1455219489 source:c:\users\administrator\desktop\zcore\zhycore\src\debuger.cpp
+	"../include/Debuger.h"
+	<iostream>
+
+1455218568 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udpsocket.h
+	<memory>
+
+1455202088 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udppacket.h
+	<string>
+	<cstdint>
+
+1455202099 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udppacket.cpp
+	"udppacket.h"
+	"string.h"
+	<iostream>
+	<malloc.h>
+
+1455200151 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udpsocket.cpp
+	"udpsocket.h"
+	"cross_platform_socket.h"
+	"socket_exception.h"
+	<iostream>
+	<cstdint>
+	"udppacket.h"
+	<stdio.h>
+
+1455218467 source:c:\users\administrator\desktop\zcore\zhycore\src\extrafuncs.cpp
+	"../include/ExtraFuncs.h"
+	<time.h>
+	<cstdlib>
+	<iostream>
+	<iomanip>
+	<unistd.h>
+
+1455191917 c:\users\administrator\desktop\zcore\zhycore\include\extrafuncs.h
+
+1455223321 source:c:\users\administrator\desktop\zcore\zhycore\src\sessionmanager.cpp
+	"../src/raknet/lib/udpsocket.h"
+	"../src/raknet/lib/udppacket.h"
+	"raknet/protocol/UNCONNECTED_PING.hpp"
+	"raknet/protocol/UNCONNECTED_PONG.hpp"
+	"../include/ExtraFuncs.h"
+	<stdio.h>
+	<windows.h>
+	<iostream>
+	"../include/SessionManager.h"
+	"../include/Debuger.h"
+
+1455217311 c:\users\administrator\desktop\zcore\zhycore\include\sessionmanager.h
+	"../src/raknet/lib/udpsocket.h"
+	"ExtraFuncs.h"
+	"../src/raknet/protocol/Packet.hpp"
+
+1455218625 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\unconnected_ping.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455223699 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\packet.hpp
+	<cstring>
+	"../../utils/Binary.hpp"
+	<iostream>
+	<string>
+
+1455218910 c:\users\administrator\desktop\zcore\zhycore\src\utils\binary.hpp
+
+1455223159 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\unconnected_pong.hpp
+	<iostream>
+	"Packet.hpp"
+	<string>
 

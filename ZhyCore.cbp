@@ -34,16 +34,29 @@
 			<Add option="-std=c++0x" />
 			<Add option="-lwsock32" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="Main.cpp" />
+		<Unit filename="include/Debuger.h" />
+		<Unit filename="include/ExtraFuncs.h" />
+		<Unit filename="include/SessionManager.h" />
+		<Unit filename="src/Debuger.cpp" />
+		<Unit filename="src/ExtraFuncs.cpp" />
+		<Unit filename="src/SessionManager.cpp" />
+		<Unit filename="src/raknet/SessionManager.cpp" />
 		<Unit filename="src/raknet/lib/cross_platform_socket.cpp" />
 		<Unit filename="src/raknet/lib/cross_platform_socket.h" />
 		<Unit filename="src/raknet/lib/socket_exception.h" />
-		<Unit filename="src/raknet/lib/udp_packet.cpp" />
 		<Unit filename="src/raknet/lib/udp_packet.h" />
-		<Unit filename="src/raknet/lib/udp_socket.cpp" />
 		<Unit filename="src/raknet/lib/udp_socket.h" />
-		<Unit filename="threadpool.cpp" />
-		<Unit filename="threadpool.h" />
+		<Unit filename="src/raknet/lib/udppacket.cpp" />
+		<Unit filename="src/raknet/lib/udppacket.h" />
+		<Unit filename="src/raknet/lib/udpsocket.cpp" />
+		<Unit filename="src/raknet/lib/udpsocket.h" />
+		<Unit filename="src/raknet/protocol/Packet.hpp" />
+		<Unit filename="src/raknet/protocol/UNCONNECTED_PING.hpp" />
+		<Unit filename="src/raknet/protocol/UNCONNECTED_PONG.hpp" />
+		<Unit filename="src/scheduler/ThreadPool.cpp" />
+		<Unit filename="src/scheduler/ThreadPool.h" />
+		<Unit filename="src/utils/Binary.hpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -1,19 +1,18 @@
-#include "udp_socket.h"
+#include "udpsocket.h"
 
 #include "cross_platform_socket.h"
 #include "socket_exception.h"
 #include <iostream>
 #include <cstdint>
-#include "udp_packet.h"
+#include "udppacket.h"
 #include <stdio.h>
-
 #define MAX_BUFF 2048
 
-udp_socket::udp_socket() : udp_socket(0) {
+udpsocket::udpsocket() : udpsocket(0) {
 
 }
 
-udp_socket::udp_socket(int port) {
+udpsocket::udpsocket(int port) {
     try_sockets_layer_init();
     _handle = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (_handle <= 0) {
@@ -24,31 +23,31 @@ udp_socket::udp_socket(int port) {
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons((unsigned short) port);
-
+u_long mode = 1;
+ioctlsocket(_handle,FIONBIO,&mode);
     if (bind(_handle, (const sockaddr *) &address, sizeof(sockaddr_in)) < 0) {
         throw socket_exception();
     }
 }
 
-void udp_socket::send_to(unsigned int a, unsigned int b, unsigned int c, unsigned int d, unsigned short port, const char *data) {
-    unsigned int address = (a << 24) | (b << 16) | (c << 8) | d;
+void udpsocket::writePacket(char* address, unsigned short port, const char *data,int buflen) {
+   // unsigned int address = (byte[0] << 24) | (byte[1] << 16) | (byte[2] << 8) | byte[3];
     sockaddr_in addr;
     addr.sin_family = AF_INET;
-    addr.sin_addr.s_addr = htonl(address);
+    addr.sin_addr.s_addr = inet_addr(address);
     addr.sin_port = htons(port);
-    int packet_size = strlen(data) + 1;
     int sent_bytes = sendto(_handle,
                             data,
-                            packet_size,
+                            buflen,
                             0,
                             (sockaddr *) &addr,
                             sizeof(sockaddr_in));
-    if (sent_bytes != packet_size) {
+    if (sent_bytes != buflen) {
         throw socket_exception();
     }
 }
 
-std::shared_ptr<udp_packet> udp_socket::receive() {
+std::shared_ptr<udppacket> udpsocket::readPacket() {
     	 char packet_data[MAX_BUFF];
 		// memset(packet_data, '\0', MAX_BUFF);
     sockaddr_in from;
@@ -61,9 +60,9 @@ std::shared_ptr<udp_packet> udp_socket::receive() {
                          0,
                          (sockaddr *) &from,
                          &fromLength);
-
-    unsigned int from_address = ntohl(from.sin_addr.s_addr);
+                         if(bytes<=0)return NULL;
+    char *from_address = inet_ntoa(from.sin_addr);
     unsigned int from_port = ntohs(from.sin_port);
-    return std::shared_ptr<udp_packet>(new udp_packet("host", from_port, (char *)packet_data, bytes));
+    return std::shared_ptr<udppacket>(new udppacket(from_address, from_port, (char *)packet_data, bytes));
 }
 
