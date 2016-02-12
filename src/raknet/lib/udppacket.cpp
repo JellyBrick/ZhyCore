@@ -8,7 +8,7 @@ udppacket::udppacket(char* address, int port, char *data,int size) {
 	_data=new char[size];
 	memcpy(_data,data,size);
 	_size = size;
-	free(data);
+	delete data;
 }
 
 udppacket::~udppacket() {

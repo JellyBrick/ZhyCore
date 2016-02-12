@@ -11,8 +11,7 @@ class UNCONNECTED_PING : public Packet
         encode(){
 
                       Packet::encode();
-     putLong(pingID);
-putMagic();
+
         }
          decode(){
                       Packet::decode();

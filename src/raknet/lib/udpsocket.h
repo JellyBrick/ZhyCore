@@ -1,6 +1,6 @@
 #ifndef SOCKET_H
 #define SOCKET_H
-
+#include <vector>
 #include <memory>
 
 class udppacket;
@@ -12,8 +12,8 @@ private:
 public:
     udpsocket();
     udpsocket(int port);
-    void writePacket(char* address, unsigned short port, const char *data,int buflen);
-    std::shared_ptr<udppacket> readPacket();
+void writePacket(std::string address, unsigned short port,std::string data);
+std::string readPacket(std::string *addr,unsigned int  &port);
 };
 
 #endif

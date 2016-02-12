@@ -1,15 +1,15 @@
 #ifndef DEBUGER_H
 #define DEBUGER_H
-
+#include <string>
 
 class Debuger
 {
     public:
         Debuger();
         virtual ~Debuger();
-   char* bin2hex(char *chs,int chlen);
 
-    protected:
+  std::string bin2hex(const std::string &strBin);
+  protected:
 
     private:
 char strHex[1464];

@@ -6,6 +6,11 @@
 #include <iostream>
 #include <iomanip>
 #include <unistd.h>
+
+char* makeIPhash(char *,int port){
+
+
+}
 unsigned long long nanotime( void )
 {
     asm
