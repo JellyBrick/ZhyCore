@@ -20,7 +20,7 @@ public:
         Packet::decode();
         offset+=16;
         protocol=getByte();
-        mtuSize=123;
+        mtuSize=get(true).size()+18;
     }
 
 protected:

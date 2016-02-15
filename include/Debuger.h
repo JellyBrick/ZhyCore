@@ -8,7 +8,7 @@ class Debuger
         Debuger();
         virtual ~Debuger();
 
-  std::string bin2hex(const std::string &strBin);
+  static std::string bin2hex(const std::string &strBin);
   protected:
 
     private:

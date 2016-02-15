@@ -15,7 +15,7 @@ void try_sockets_layer_init()
 void sockets_layer_cleanup()
 {
 #if PLATFORM == PLATFORM_WINDOWS
-    WSACleanup();
+   WSACleanup();
 #endif
 }
 

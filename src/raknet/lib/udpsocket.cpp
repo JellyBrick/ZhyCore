@@ -12,7 +12,9 @@ udpsocket::udpsocket() : udpsocket(0)
 {
 
 }
-
+unsigned int udpsocket::getPort(){
+return Port_;
+}
 udpsocket::udpsocket(int port)
 {
     try_sockets_layer_init();
@@ -28,10 +30,12 @@ udpsocket::udpsocket(int port)
     address.sin_port = htons((unsigned short) port);
     u_long mode = 1;
     ioctlsocket(_handle,FIONBIO,&mode);
+
     if (bind(_handle, (const sockaddr *) &address, sizeof(sockaddr_in)) < 0)
     {
         throw socket_exception();
     }
+     Port_=port;
 }
 
 void udpsocket::writePacket(std::string address, unsigned short port,std::string data)
@@ -50,7 +54,6 @@ void udpsocket::writePacket(std::string address, unsigned short port,std::string
                             (sockaddr *) &addr,
                             sizeof(sockaddr_in));
 //                           int sent_bytes=data.length();
-std::cout<<address<<" "<<port<<std::endl;
     if (sent_bytes != data.length())
     {
         throw socket_exception();

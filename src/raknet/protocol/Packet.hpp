@@ -7,6 +7,8 @@
 #include <string>
 #include "../../../include/ExtraFuncs.h"
 #include <stdio.h>
+#include <sstream>
+#include "../../../include/Debuger.h"
 class Packet
 {
 public:
@@ -30,21 +32,32 @@ public:
     {
         offset=1;
     }
-    putByte(char byte){
-    buffer[offset++]=byte;
-    }
-    char getByte(){
-    return buffer[offset++];
-    }
-    std::string get(bool b){
-        if(!b)return "";
-       return buffer.substr(0,offset);
-    }
+    putByte(char byte)
+    {
 
+        buffer+=byte;
+        offset++;
+    }
+   unsigned char getByte()
+    {
+//offset+=1;
+
+        return buffer[offset++];
+    }
+    std::string get(bool b)
+    {
+        if(!b)return "";
+        return substr(buffer,0,offset);
+
+    }
+    std::string get(int num){
+        offset+=num;
+     return substr(buffer,offset-num,num);
+    }
     put(std::string str)
     {
 
-buffer+=str;
+        buffer+=str;
         offset+=str.size();
     }
     putLong(long v)
@@ -57,11 +70,68 @@ buffer+=str;
         put(str);
 
     }
+    getAddress(std::string& addr,unsigned int& port)
+    {
+       unsigned char version=getByte();
+
+        if(version==4)
+        {
+
+            addr=ctos((~getByte())&0xff)+".";
+            addr+=ctos((~getByte())&0xff)+".";
+            addr+=ctos((~getByte())&0xff)+".";
+            addr+=ctos((~getByte())&0xff);
+            port=getShort();
+        }
+        else
+        {
+//TODO: IPV6
+        }
+
+    }
+    putAddress(std::string addr,unsigned int port,char version=4)
+    {
+        putByte(version);
+        if(version==4)
+        {
+            char *str=new char[addr.length()+1];
+            strcpy(str,addr.c_str());
+            char *p = strtok(str,".");
+            while(p!=NULL)
+            {
+                putByte(~atoc(p));
+                p = strtok(NULL,".");
+            }
+            putShort(port);
+
+            delete[] str;
+        }
+        else
+        {
+//IPV6
+        }
+
+    }
+    bool feof(){
+return offset>=buffer.size();
+    }
+    int getTriad(){
+return readTriad(get(3));
+    }
+    int getInt(){
+return readInt(get(4));
+    }
+    int getLTriad(){
+return readLTriad(get(3));
+    }
+    putLTriad(int v){
+return put(writeLTriad(v));
+    }
+
     putShort(short v)
     {
-        //std:: cout<<v<<std::endl;
-        buffer+=v&0xFF00;
-        buffer+=v&0x00FF;
+        buffer+=(char)((v>>8)&0xFF);
+        buffer+=(char)(v&0xFF);
         offset+=2;
 
     }
@@ -70,17 +140,25 @@ buffer+=str;
         put(MAGIC);
     }
     hexdump(unsigned char *buf, const int num)
-{
-    int i;
-    for(i = 0; i < num; i++)
     {
-        printf("%02X ", buf[i]);
-        if ((i+1)%8 == 0)
-            printf("\n");
+        int i;
+        for(i = 0; i < num; i++)
+        {
+            printf("%02X ", buf[i]);
+            if ((i+1)%8 == 0)
+                printf("\n");
+        }
+        printf("\n");
     }
-    printf("\n");
-}
+    short getShort()
+    {
+        unsigned char aChar[2];
 
+        aChar[1]=buffer[offset++];
+        aChar[0]=buffer[offset++];
+
+        return *(short*)aChar;
+    }
     __int64 getLong()
     {
         unsigned char aChar[8];

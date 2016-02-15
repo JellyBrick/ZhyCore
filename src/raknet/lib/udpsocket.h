@@ -12,6 +12,8 @@ private:
 public:
     udpsocket();
     udpsocket(int port);
+    unsigned int Port_;
+unsigned int getPort();
 void writePacket(std::string address, unsigned short port,std::string data);
 std::string readPacket(std::string *addr,unsigned int  &port);
 };

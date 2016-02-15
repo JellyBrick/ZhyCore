@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1455186092 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\cross_platform_socket.cpp
+1455356316 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\cross_platform_socket.cpp
 	"cross_platform_socket.h"
 
 1455126999 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\cross_platform_socket.h
@@ -21,17 +21,11 @@
 	<queue>
 	<vector>
 
-1455301160 source:c:\users\administrator\desktop\zcore\zhycore\main.cpp
+1455454087 source:c:\users\administrator\desktop\zcore\zhycore\main.cpp
 	<iostream>
 	<stdlib.h>
 	<stdio.h>
-	"src/raknet/lib/udpsocket.h"
-	"src/raknet/lib/udppacket.h"
-	"include/Debuger.h"
-	"src/scheduler/threadpool.h"
-	<string>
-	<cstring>
-	"include/SessionManager.h"
+	"src/Server.hpp"
 
 1455179236 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udp_socket.h
 	<memory>
@@ -57,18 +51,16 @@
 1417003772 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\socket_exception.h
 	<exception>
 
-1455304333 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\sessionmanager.cpp
+1455478149 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\sessionmanager.cpp
 	"../../src/raknet/lib/udpsocket.h"
 	"../../src/raknet/lib/udppacket.h"
-	"../raknet/protocol/UNCONNECTED_PING.hpp"
-	"../raknet/protocol/UNCONNECTED_PONG.hpp"
-	"../raknet/protocol/OPEN_CONNECTION_REQUEST_1.hpp"
 	"../../include/ExtraFuncs.h"
 	<stdio.h>
 	<windows.h>
 	<iostream>
 	"../../include/SessionManager.h"
 	"../../include/Debuger.h"
+	"protocol/DATA_PACKET_4.hpp"
 
 1455009739 source:c:\users\administrator\desktop\zcore\zhycore\src\scheduler\threadpool.cpp
 	<stdlib.h>
@@ -83,15 +75,15 @@
 	<queue>
 	<vector>
 
-1455286077 c:\users\administrator\desktop\zcore\zhycore\include\debuger.h
+1455392235 c:\users\administrator\desktop\zcore\zhycore\include\debuger.h
 	<string>
 
-1455286105 source:c:\users\administrator\desktop\zcore\zhycore\src\debuger.cpp
+1455395464 source:c:\users\administrator\desktop\zcore\zhycore\src\debuger.cpp
 	"../include/Debuger.h"
 	<iostream>
 	<string>
 
-1455303009 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udpsocket.h
+1455376439 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udpsocket.h
 	<vector>
 	<memory>
 
@@ -99,13 +91,13 @@
 	<string>
 	<cstdint>
 
-1455283450 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udppacket.cpp
+1455394848 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udppacket.cpp
 	"udppacket.h"
 	"string.h"
 	<iostream>
 	<malloc.h>
 
-1455304291 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udpsocket.cpp
+1455395729 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udpsocket.cpp
 	"udpsocket.h"
 	"cross_platform_socket.h"
 	"socket_exception.h"
@@ -114,15 +106,17 @@
 	"udppacket.h"
 	<stdio.h>
 
-1455297689 source:c:\users\administrator\desktop\zcore\zhycore\src\extrafuncs.cpp
+1455479328 source:c:\users\administrator\desktop\zcore\zhycore\src\extrafuncs.cpp
 	"../include/ExtraFuncs.h"
 	<time.h>
 	<cstdlib>
 	<iostream>
 	<iomanip>
 	<unistd.h>
+	<cstring>
 
-1455191917 c:\users\administrator\desktop\zcore\zhycore\include\extrafuncs.h
+1455384178 c:\users\administrator\desktop\zcore\zhycore\include\extrafuncs.h
+	"string"
 
 1455289535 source:c:\users\administrator\desktop\zcore\zhycore\src\sessionmanager.cpp
 	"../src/raknet/lib/udpsocket.h"
@@ -137,18 +131,23 @@
 	"../include/SessionManager.h"
 	"../include/Debuger.h"
 
-1455303050 c:\users\administrator\desktop\zcore\zhycore\include\sessionmanager.h
+1455473875 c:\users\administrator\desktop\zcore\zhycore\include\sessionmanager.h
 	"../src/raknet/lib/udpsocket.h"
 	"ExtraFuncs.h"
 	"../src/raknet/protocol/Packet.hpp"
 	<map>
 	"../src/raknet/Session.h"
+	"../src/raknet/protocol/UNCONNECTED_PING.hpp"
+	"../src/raknet/protocol/UNCONNECTED_PONG.hpp"
+	"../src/raknet/protocol/OPEN_CONNECTION_REQUEST_1.hpp"
+	"../src/raknet/protocol/OPEN_CONNECTION_REQUEST_2.hpp"
+	"../src/raknet/protocol/DataPacket.hpp"
 
 1455287971 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\unconnected_ping.hpp
 	<iostream>
 	"Packet.hpp"
 
-1455288600 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\packet.hpp
+1455476331 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\packet.hpp
 	<cstring>
 	"../../utils/Binary.hpp"
 	<vector>
@@ -156,15 +155,18 @@
 	<string>
 	"../../../include/ExtraFuncs.h"
 	<stdio.h>
+	<sstream>
+	"../../../include/Debuger.h"
 
-1455298133 c:\users\administrator\desktop\zcore\zhycore\src\utils\binary.hpp
+1455399610 c:\users\administrator\desktop\zcore\zhycore\src\utils\binary.hpp
+	"../../include/Debuger.h"
 
 1455295120 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\unconnected_pong.hpp
 	<iostream>
 	"Packet.hpp"
 	<string>
 
-1455265928 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\open_connection_request_1.hpp
+1455369360 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\open_connection_request_1.hpp
 	<iostream>
 	"Packet.hpp"
 
@@ -174,13 +176,109 @@
 	"../../include/ExtraFuncs.h"
 	"protocol/OPEN_CONNECTION_REQUEST_1.hpp"
 
-1455302544 c:\users\administrator\desktop\zcore\zhycore\src\raknet\session.h
+1455513265 c:\users\administrator\desktop\zcore\zhycore\src\raknet\session.h
 	<iostream>
 	"../../include/ExtraFuncs.h"
 	"protocol/OPEN_CONNECTION_REQUEST_1.hpp"
+	"protocol/OPEN_CONNECTION_REQUEST_2.hpp"
+	"../../include/SessionManager.h"
+	"protocol/OPEN_CONNECTION_REPLY_1.hpp"
+	"protocol/OPEN_CONNECTION_REPLY_2.hpp"
+	"protocol/DATA_PACKET_4.hpp"
+	"protocol/DATA_PACKET_0.hpp"
+	"protocol/EncapsulatedPacket.hpp"
+	"protocol/CLIENT_CONNECT_DataPacket.hpp"
+	"protocol/SERVER_HANDSHAKE_DataPacket.hpp"
+	"protocol/CLIENT_HANDSHAKE_DataPacket.hpp"
+	"../Player.hpp"
+	<vector>
+	"protocol/ACK.hpp"
+
+1455513269 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\session.cpp
+	"../../src/raknet/Session.h"
+	"../../include/Debuger.h"
+	"protocol/BATCH_PACKET.hpp"
+	"stdlib.h"
+	<iostream>
+
+1455370438 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\open_connection_reply_1.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455372217 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\open_connection_request_2.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455382302 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\open_connection_reply_2.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455404451 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\datapacket.hpp
+	<iostream>
+	"Packet.hpp"
+	<vector>
+	"../../utils/Binary.hpp"
+	"EncapsulatedPacket.hpp"
+
+1455440810 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\encapsulatedpacket.hpp
+	<iostream>
+	"Packet.hpp"
+	"../../../include/ExtraFuncs.h"
+	"math.h"
+	"../../../include/Debuger.h"
+	"../../utils/Binary.hpp"
+
+1455401246 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\data_packet_4.hpp
+	<iostream>
+	"Packet.hpp"
+	"DataPacket.hpp"
+
+1455397611 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\client_connect_datapacket.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455401248 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\data_packet_0.hpp
+	<iostream>
+	"Packet.hpp"
+	"DataPacket.hpp"
+
+1455404513 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\server_handshake_datapacket.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455405580 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\client_handshake_datapacket.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455513679 c:\users\administrator\desktop\zcore\zhycore\src\player.hpp
+	<iostream>
+	<vector>
+	"raknet/protocol/Packet.hpp"
+	"raknet/protocol/BATCH_PACKET.hpp"
+
+1455473829 c:\users\administrator\desktop\zcore\zhycore\src\server.hpp
+	<iostream>
+	<vector>
+	"../include/ExtraFuncs.h"
+	"Player.hpp"
+	"../include/SessionManager.h"
+	"windows.h"
+	"scheduler/ThreadPool.h"
+	"raknet/RakNetServer.hpp"
+	<chrono>
+	<thread>
+
+1455473636 c:\users\administrator\desktop\zcore\zhycore\src\raknet\raknetserver.hpp
+	"../scheduler/ThreadPool.h"
 	"../../include/SessionManager.h"
 
-1455304413 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\session.cpp
-	"../../src/raknet/Session.h"
+1455475923 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\batch_packet.hpp
 	<iostream>
+	"Packet.hpp"
+
+1455481291 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\ack.hpp
+	<iostream>
+	"Packet.hpp"
+	<vector>
+	<algorithm>
 

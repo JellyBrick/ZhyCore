@@ -1,19 +1,18 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
-#include "src/raknet/lib/udpsocket.h"
-#include "src/raknet/lib/udppacket.h"
-#include "include/Debuger.h"
-#include "src/scheduler/threadpool.h"
-#include <string>
-#include <cstring>
-#include "include/SessionManager.h"
+#include "src/Server.hpp"
 #define workernum 100;
 using namespace std;
+Server *ser;
+
 int main()
 {
-    cout<<"ZhyCore Test Async UDP Server Started\n";
-       SessionManager* manager= new SessionManager(new udpsocket(8888));
+    cout <<"ZhyCore Test Async UDP Server Started\n";
+ser=new Server();
 
     return 0;
+}
+Server* getTotalServer(){
+return ser;
 }
