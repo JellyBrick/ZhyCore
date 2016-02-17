@@ -7,12 +7,17 @@ class RakNetServer : public ThreadPoolWorker
 public:
     Server *r;
     SessionManager *sess;
-    RakNetServer(Server *ser)  {r=ser;};
+    RakNetServer(Server *ser)
+    {
+        r=ser;
+    };
 
-    void operator()(){
-    sess=new SessionManager(new udpsocket(8888),r);
+    void operator()()
+    {
+        sess=new SessionManager(new udpsocket(8888),r);
     }
-    SessionManager* getManager(){
+    SessionManager* getManager()
+    {
         return sess;
     }
 

@@ -19,7 +19,7 @@ Session::Session(SessionManager* sessionManager_,std::string address_,unsigned i
 Session::~Session()
 {
     if(PlayerClass!=nullptr)
-   delete PlayerClass;
+        delete PlayerClass;
 
 }
 Session::handleEncapsulatedPacketRoute(EncapsulatedPacket packet)
@@ -73,9 +73,9 @@ Session::handleEncapsulatedPacketRoute(EncapsulatedPacket packet)
     }
     else if (status == STATE_CONNECTED)
     {
-server->addToHandlePacketQueue(this,packet);
+        server->addToHandlePacketQueue(this,packet);
 
-    //    EncapsulatedPacketsToHandle.push_back(packet);
+        //    EncapsulatedPacketsToHandle.push_back(packet);
     }
 
 }
@@ -83,30 +83,32 @@ Session::streamEncapsulated(EncapsulatedPacket packet)
 {
     if(!IsKeptConnection())return 0;
     Packet* pk=getPacket(packet.buffer[0]);
-    if(pk!=nullptr){
-    pk->buffer=packet.buffer;
-    pk->decode();
-   PlayerClass->handleDataPacket(pk);
-    delete pk;
+    if(pk!=nullptr)
+    {
+        pk->buffer=packet.buffer;
+        pk->decode();
+        PlayerClass->handleDataPacket(pk);
+        delete pk;
     }
 }
 Packet* Session::getPacket(unsigned char pid)
 {
     switch(pid)
     {
-         case BATCH_PACKET::ID://BATCH_PACKET
-        {
+    case BATCH_PACKET::ID://BATCH_PACKET
+    {
 
-            return new BATCH_PACKET();
-        }
-        break;
+        return new BATCH_PACKET();
+    }
+    break;
     case LoginPacket::ID:
     {
         return new LoginPacket();
         break;
     }
-    default:{
-    return nullptr;
+    default:
+    {
+        return nullptr;
     }
     }
     return nullptr;
@@ -158,7 +160,7 @@ bool Session::update(double time)
     if(!isActive and (lastUpdate + 5.0) < time)
     {
 
-    disconnect("timeout");
+        disconnect("timeout");
         return false;
     }
     isActive=false;
@@ -187,15 +189,16 @@ Session::close()
 Session::disconnect(std::string reason)
 {
 
-if(IsKeptConnection()){
+    if(IsKeptConnection())
+    {
 
-   PlayerClass->close();
-   server->removePlayer(PlayerClass);
-   delete PlayerClass;
-   PlayerClass=nullptr;
-   status=0;
+        PlayerClass->close();
+        server->removePlayer(PlayerClass);
+        delete PlayerClass;
+        PlayerClass=nullptr;
+        status=0;
 
-   }
+    }
     Manager->removeSession(this,reason);
 
 

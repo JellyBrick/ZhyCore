@@ -12,8 +12,9 @@ udpsocket::udpsocket() : udpsocket(0)
 {
 
 }
-unsigned int udpsocket::getPort(){
-return Port_;
+unsigned int udpsocket::getPort()
+{
+    return Port_;
 }
 udpsocket::udpsocket(int port)
 {
@@ -35,13 +36,13 @@ udpsocket::udpsocket(int port)
     {
         throw socket_exception();
     }
-     Port_=port;
+    Port_=port;
 }
 
 void udpsocket::writePacket(std::string address, unsigned short port,std::string data)
 {
     // unsigned int address = (byte[0] << 24) | (byte[1] << 16) | (byte[2] << 8) | byte[3];
-       sockaddr_in addr;
+    sockaddr_in addr;
     addr.sin_family = AF_INET;
 
     addr.sin_addr.s_addr = inet_addr(address.c_str());
@@ -76,7 +77,7 @@ std::string udpsocket::readPacket(std::string *addr,unsigned int  &port)
                      &fromLength);
     if(bytes<=0)return "";
 
-   * addr=inet_ntoa(from.sin_addr); //amazing
+    * addr=inet_ntoa(from.sin_addr); //amazing
 
     port = (unsigned int)ntohs(from.sin_port);
     return std::string (packet_data,bytes);

@@ -4,15 +4,15 @@
 
 class Debuger
 {
-    public:
-        Debuger();
-        virtual ~Debuger();
+public:
+    Debuger();
+    virtual ~Debuger();
 
-  static std::string bin2hex(const std::string &strBin);
-  protected:
+    static std::string bin2hex(const std::string &strBin);
+protected:
 
-    private:
-char strHex[1464];
+private:
+    char strHex[1464];
 };
 
 #endif // DEBUGER_H

@@ -6,18 +6,18 @@
 class StartGamePacket : public Packet
 {
 public:
-     const static int ID=0x95;
-	 int seed;
-	 unsigned char dimension;
-	 int generator;
-	 int gamemode;
-	 __int64 eid;
-	 int spawnX;
-	 int spawnY;
-	 int spawnZ;
-	 float x;
-	 float y;
-	 float z;
+    const static int ID=0x95;
+    int seed;
+    unsigned char dimension;
+    int generator;
+    int gamemode;
+    __int64 eid;
+    int spawnX;
+    int spawnY;
+    int spawnZ;
+    float x;
+    float y;
+    float z;
 
     StartGamePacket() {};
     encode()

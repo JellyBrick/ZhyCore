@@ -2,9 +2,10 @@
 #define EXTRAFUNCS_H
 #include "string"
 
-struct UUiD{
-__int64 data1;
-__int64 data2;
+struct UUiD
+{
+    __int64 data1;
+    __int64 data2;
 };
 
 double GetStartTime( void );

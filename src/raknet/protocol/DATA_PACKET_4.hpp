@@ -8,7 +8,10 @@ class DATA_PACKET_4 : public DataPacket
 public:
     const static int ID=0x84;
     DATA_PACKET_4() {};
-    getID(){return ID;}
+    getID()
+    {
+        return ID;
+    }
 protected:
 
 private:

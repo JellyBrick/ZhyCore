@@ -19,9 +19,9 @@ public:
     decode()
     {
         Packet::decode();
-    clientID=getLong();
-    sendPing=getLong();
-    useSecurity=getByte()>0;
+        clientID=getLong();
+        sendPing=getLong();
+        useSecurity=getByte()>0;
     }
 
 protected:

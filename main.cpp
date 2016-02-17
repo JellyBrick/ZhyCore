@@ -10,7 +10,7 @@ Server *ser;
 int main()
 {
     cout <<"ZhyCore Test Async UDP Server Started\n";
-new Server();
+    new Server();
 
     return 0;
 }

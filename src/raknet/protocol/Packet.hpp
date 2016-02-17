@@ -38,31 +38,35 @@ public:
         buffer+=byte;
         offset++;
     }
-   unsigned char getByte()
+    unsigned char getByte()
     {
 //offset+=1;
 
         return buffer[offset++];
     }
-    UUiD getUUID(){
-    UUiD res;
-    res.data1=getLong();
-    res.data2=getLong();
+    UUiD getUUID()
+    {
+        UUiD res;
+        res.data1=getLong();
+        res.data2=getLong();
     }
-    std::string getString(){
-    return get(getShort());
+    std::string getString()
+    {
+        return get(getShort());
     }
-   putInt(int v){
-    buffer+=writeInt(v);
-    offset+=4;
+    putInt(int v)
+    {
+        buffer+=writeInt(v);
+        offset+=4;
     }
-    putFloat(float v){
-    int r;
-    unsigned char ch[4];
-    memcpy(ch,&v,4);
-    memcpy(&r,ch,4);
-    buffer+=writeInt(r);
-offset+=4;
+    putFloat(float v)
+    {
+        int r;
+        unsigned char ch[4];
+        memcpy(ch,&v,4);
+        memcpy(&r,ch,4);
+        buffer+=writeInt(r);
+        offset+=4;
 
     }
     std::string get(bool b)
@@ -71,9 +75,10 @@ offset+=4;
         return substr(buffer,0,offset);
 
     }
-    std::string get(int num){
+    std::string get(int num)
+    {
         offset+=num;
-     return substr(buffer,offset-num,num);
+        return substr(buffer,offset-num,num);
     }
     put(std::string str)
     {
@@ -93,7 +98,7 @@ offset+=4;
     }
     getAddress(std::string& addr,unsigned int& port)
     {
-       unsigned char version=getByte();
+        unsigned char version=getByte();
 
         if(version==4)
         {
@@ -133,20 +138,25 @@ offset+=4;
         }
 
     }
-    bool feof(){
-return offset>=buffer.size();
+    bool feof()
+    {
+        return offset>=buffer.size();
     }
-    int getTriad(){
-return readTriad(get(3));
+    int getTriad()
+    {
+        return readTriad(get(3));
     }
-    int getInt(){
-return readInt(get(4));
+    int getInt()
+    {
+        return readInt(get(4));
     }
-    int getLTriad(){
-return readLTriad(get(3));
+    int getLTriad()
+    {
+        return readLTriad(get(3));
     }
-    putLTriad(int v){
-return put(writeLTriad(v));
+    putLTriad(int v)
+    {
+        return put(writeLTriad(v));
     }
 
     putShort(short v)

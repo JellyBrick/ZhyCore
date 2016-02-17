@@ -1,7 +1,7 @@
 #include "../include/Debuger.h"
 #include <iostream>
 #include <string>
-unsigned char strHex[1464]={0};
+unsigned char strHex[1464]= {0};
 
 Debuger::Debuger()
 {
@@ -15,7 +15,7 @@ Debuger::~Debuger()
 
 
 
- std::string Debuger::bin2hex(const std::string &strBin)
+std::string Debuger::bin2hex(const std::string &strBin)
 {
     std::string strHex;
     strHex.resize(strBin.size() * 2);
@@ -38,5 +38,5 @@ Debuger::~Debuger()
         }
     }
 
-return strHex;
+    return strHex;
 }

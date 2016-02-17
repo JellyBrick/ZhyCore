@@ -109,74 +109,74 @@ SOFTWARE.
 #include <vector>
 
 class ThreadPoolWorker
-  /// A work unit for the TreadPool
-  /// Create subclasses to send work to the threadpool
+/// A work unit for the TreadPool
+/// Create subclasses to send work to the threadpool
 {
 public:
-	virtual ~ThreadPoolWorker() {}
-	  /// Destroy
+    virtual ~ThreadPoolWorker() {}
+    /// Destroy
 
-	virtual void operator()() = 0;
-	  /// Perform the work
+    virtual void operator()() = 0;
+    /// Perform the work
 };
 
 
 class ThreadPool
-  /// ThreadPool class: holds a list of threads and a queue of workers
-  /// It provides two main operations:
-  ///   enqueueWork(ThreadPoolWorker* worker)
-  ///   waitEnd()
+/// ThreadPool class: holds a list of threads and a queue of workers
+/// It provides two main operations:
+///   enqueueWork(ThreadPoolWorker* worker)
+///   waitEnd()
 {
 public:
-	explicit ThreadPool(int _maxThreads = 2);
-	  /// Create the pool and all the synchronization primitives with
-	  /// _maxTreads OS threads
+    explicit ThreadPool(int _maxThreads = 2);
+    /// Create the pool and all the synchronization primitives with
+    /// _maxTreads OS threads
 
-	~ThreadPool();
-	  /// Delete all the associated resources
+    ~ThreadPool();
+    /// Delete all the associated resources
 
-	bool enqueueWork(ThreadPoolWorker* worker);
-	  /// Add worker to the queue, and start processing it
-	  /// ThreadPool takes ownership of the worker and will destroy it when
-	  /// finished
+    bool enqueueWork(ThreadPoolWorker* worker);
+    /// Add worker to the queue, and start processing it
+    /// ThreadPool takes ownership of the worker and will destroy it when
+    /// finished
 
-	void waitEnd();
-	  /// Wait until all workers have finished
+    void waitEnd();
+    /// Wait until all workers have finished
 
-	static void* threadExecute(void* _pool);
-	  /// Static entry for threads (thread entry point)
+    static void* threadExecute(void* _pool);
+    /// Static entry for threads (thread entry point)
 
 private:
-	int maxThreads;
-	  /// Number of OS threads
+    int maxThreads;
+    /// Number of OS threads
 
-	int incompleteWork;
-	  /// Number of UNFINISHED work units: this is NOT the number of items in
-	  /// the workerQueue
+    int incompleteWork;
+    /// Number of UNFINISHED work units: this is NOT the number of items in
+    /// the workerQueue
 
-	bool requestThreadEnd;
-	  /// Request thead workers to finish
+    bool requestThreadEnd;
+    /// Request thead workers to finish
 
-	std::vector<pthread_t*> threads;
-	  /// Collection of threads
+    std::vector<pthread_t*> threads;
+    /// Collection of threads
 
-	std::queue<ThreadPoolWorker*> workerQueue;
-	  /// Job queue
+    std::queue<ThreadPoolWorker*> workerQueue;
+    /// Job queue
 
-	pthread_mutex_t mutexWorkCompletion;
-	  /// Protects: incompleteWork
+    pthread_mutex_t mutexWorkCompletion;
+    /// Protects: incompleteWork
 
-	pthread_mutex_t mutexQueue;
-	  /// Protects: workerQueue
+    pthread_mutex_t mutexQueue;
+    /// Protects: workerQueue
 
-	pthread_cond_t incompleteWorkCond;
-	  /// Signals: changes in incompleteWork
+    pthread_cond_t incompleteWorkCond;
+    /// Signals: changes in incompleteWork
 
-	sem_t availableWork;
-	  /// Semaphore holding the number of work units available
+    sem_t availableWork;
+    /// Semaphore holding the number of work units available
 
-	void initializeThreads();
-	bool fetchWork(ThreadPoolWorker** worker);
+    void initializeThreads();
+    bool fetchWork(ThreadPoolWorker** worker);
 };
 
 #endif // __THREADPOOL_H_

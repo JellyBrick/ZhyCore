@@ -12,25 +12,29 @@ public:
     std::vector<EncapsulatedPacket> packets;
     const char ID=-1;
     DataPacket() {};
-    virtual getID(){return ID;}
+    virtual getID()
+    {
+        return ID;
+    }
 
     encode()
     {
         buffer+=getID();
         Packet::encode();
 
-putLTriad(seqNumber);
-for(auto iter:packets)
-put(iter.toBinary());
+        putLTriad(seqNumber);
+        for(auto iter:packets)
+            put(iter.toBinary());
 
-}
+    }
 
 
     decode()
     {
         Packet::decode();
         seqNumber=getLTriad();
-        while(!feof()){
+        while(!feof())
+        {
             int off=0;
             std::string data=substr(buffer,offset,buffer.size()-offset);
             EncapsulatedPacket packet=EncapsulatedPacket::fromBinary(data,false,off);

@@ -11,7 +11,7 @@
 #include "../Server.hpp"
 
 using namespace std;
-map<string ,Session*> Sessions;
+map<string,Session*> Sessions;
 Server *server;
 SessionManager::SessionManager(udpsocket* _socket,Server *ser)
 {
@@ -21,8 +21,9 @@ SessionManager::SessionManager(udpsocket* _socket,Server *ser)
     tickProcessor();
 //    server=getTotalServer();
 }
-unsigned int SessionManager::getPort(){
-return socket->getPort();
+unsigned int SessionManager::getPort()
+{
+    return socket->getPort();
 }
 SessionManager::~SessionManager()
 {
@@ -30,23 +31,27 @@ SessionManager::~SessionManager()
 Session* SessionManager::getSession(string source,unsigned int port)
 {
 
-    map<string ,Session*>::iterator iter;
-     iter=Sessions.find(source
-  +':'+writeInt(port));
+    map<string,Session*>::iterator iter;
+    iter=Sessions.find(source
+                       +':'+writeInt(port));
     if(iter==Sessions.end())
     {
 
         Session *newsess=new Session(this,source,port,server);
-  string key=source+':'+writeInt(port);
+        string key=source+':'+writeInt(port);
         Sessions.insert(pair<string,Session*>(key,newsess));
         return newsess;
     }
-    else {
-    if(       iter->second->IsKeptConnection()){
+    else
+    {
+        if(       iter->second->IsKeptConnection())
+        {
 
+        }
+
+        ;
+        return iter->second;
     }
-
-            ;return iter->second;}
 
 }
 
@@ -84,10 +89,10 @@ iter++;
 }*/
 bool SessionManager::receivePacket()
 {
-     string source;
+    string source;
     unsigned int port;
     string buffer=socket->readPacket(&source,port);
-   if(buffer=="")return false;
+    if(buffer=="")return false;
 
     unsigned char pid=buffer[0];
     Packet* p= getPacketFromPool(pid);
@@ -96,8 +101,8 @@ bool SessionManager::receivePacket()
     {
 
         p->buffer=buffer;
-    getSession(source,port)->handlePacket(p);
- delete p; //pay attention to here;
+        getSession(source,port)->handlePacket(p);
+        delete p; //pay attention to here;
 
     }
 
@@ -118,8 +123,9 @@ bool SessionManager::receivePacket()
 
 
 }
-__int64 SessionManager::getID(){
-return serverId;
+__int64 SessionManager::getID()
+{
+    return serverId;
 }
 SessionManager::sendPacket(Packet* packet,std::string dest,int port)
 {
@@ -147,41 +153,46 @@ int SessionManager::tickProcessor()
 /*Server* SessionManager::getServer(){
 return server;
 }*/
-SessionManager::removeSession(Session* session,std::string reason){
-       std::string addr = session->address;
-       unsigned int port = session->port;
-  string key=addr
-  +':'
-  +(char)((port>>24)&0xFF)
-  +(char)((port>>16)&0xFF)
-  +(char)((port>>8)&0xFF)
-  +(char)(port&0xFF);
-  session->close();
- map<string ,Session*>::iterator iter= Sessions.find(key);
-  if(iter!=Sessions.end()){
- Sessions.erase(iter);
- delete session;
-  }
-/*
+SessionManager::removeSession(Session* session,std::string reason)
+{
+    std::string addr = session->address;
+    unsigned int port = session->port;
+    string key=addr
+               +':'
+               +(char)((port>>24)&0xFF)
+               +(char)((port>>16)&0xFF)
+               +(char)((port>>8)&0xFF)
+               +(char)(port&0xFF);
+    session->close();
+    map<string,Session*>::iterator iter= Sessions.find(key);
+    if(iter!=Sessions.end())
+    {
+        Sessions.erase(iter);
+        delete session;
+    }
+    /*
 
- map<string ,Session*>::iterator iter=Sessions.find(key);
-if(iter!=Sessions.end()){
-   //  iter->second->close();
+     map<string ,Session*>::iterator iter=Sessions.find(key);
+    if(iter!=Sessions.end()){
+       //  iter->second->close();
 
-}*/
+    }*/
 
 
 
 }
 
-int SessionManager::tick() {
-double time=GetStartTime();
-for(map<string ,Session*>::iterator itr=Sessions.begin();itr != Sessions.end();++itr){
-int count=0;
-map<string ,Session*>::iterator bakup=++itr;itr--;
-   if(!(itr->second->update(time)))itr=bakup;
-count++;
-if(count>=Sessions.size())break;
-   }
+int SessionManager::tick()
+{
+    double time=GetStartTime();
+    for(map<string,Session*>::iterator itr=Sessions.begin(); itr != Sessions.end(); ++itr)
+    {
+        int count=0;
+        map<string,Session*>::iterator bakup=++itr;
+        itr--;
+        if(!(itr->second->update(time)))itr=bakup;
+        count++;
+        if(count>=Sessions.size())break;
+    }
 
 }

@@ -3,8 +3,9 @@
 
 #include <exception>
 
-class socket_exception : std::exception {
-	
+class socket_exception : std::exception
+{
+
 };
 
 #endif

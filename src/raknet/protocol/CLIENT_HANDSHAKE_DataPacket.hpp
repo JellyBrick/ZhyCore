@@ -20,10 +20,10 @@ public:
     decode()
     {
         Packet::decode();
-getAddress(address,port);
-offset+=(1+4+2)*10;//Jump SystemAddress
-sendPing=getLong();
-sendPong=getLong();
+        getAddress(address,port);
+        offset+=(1+4+2)*10;//Jump SystemAddress
+        sendPing=getLong();
+        sendPong=getLong();
 
     }
 

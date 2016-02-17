@@ -42,9 +42,9 @@ public:
     addPlayer(Player * p)
     {
 
-    lock.lock();
+        lock.lock();
         players.push_back(p);
-       lock.unlock();
+        lock.unlock();
     }
     double getTicksPerSecondAverage()
     {
@@ -57,11 +57,12 @@ public:
     {
 
         double total=0;
-        for(int i=0; i<20; i++){
+        for(int i=0; i<20; i++)
+        {
             total+=useAverage[i];
 
-            }
-  // std::cout<<total<<std::endl;
+        }
+        // std::cout<<total<<std::endl;
         return (total/20.0)*100.0;
     }
     titleTick()
@@ -78,15 +79,17 @@ public:
         str+="%";
         SetConsoleTitle(str.c_str());
     }
-    removePlayer(Player *p){
-lock.lock();
-  std::vector<Player *>::iterator iter= std::find(players.begin(),players.end(),p);
-if(iter!=players.end()){
+    removePlayer(Player *p)
+    {
+        lock.lock();
+        std::vector<Player *>::iterator iter= std::find(players.begin(),players.end(),p);
+        if(iter!=players.end())
+        {
 
-players.erase(iter);
+            players.erase(iter);
 
-}
-lock.unlock();
+        }
+        lock.unlock();
     }
     tickProcessor()
     {
@@ -94,56 +97,61 @@ lock.unlock();
         while(isRunning)
         {
             tick();
-double next=nextTick-GetStartTime();
-if(next>0){
-            std::this_thread::sleep_for(std::chrono::milliseconds((int)ceil(next*1000)));
+            double next=nextTick-GetStartTime();
+            if(next>0)
+            {
+                std::this_thread::sleep_for(std::chrono::milliseconds((int)ceil(next*1000)));
 
-}
+            }
         }
 
     }
-    addToHandlePacketQueue(Session* ses,EncapsulatedPacket enpk_){
- std::pair<Session*,EncapsulatedPacket> pks;
- pks.first=ses;
- pks.second=enpk_;
- PacketsQueue.push_back(pks);
+    addToHandlePacketQueue(Session* ses,EncapsulatedPacket enpk_)
+    {
+        std::pair<Session*,EncapsulatedPacket> pks;
+        pks.first=ses;
+        pks.second=enpk_;
+        PacketsQueue.push_back(pks);
 
     }
-    processPackets(){
-        if(PacketsQueue.size()>0){
-    std::pair<Session*,EncapsulatedPacket> pks=PacketsQueue.front();
-    pks.first->streamEncapsulated(pks.second);
-PacketsQueue.pop_front();
+    processPackets()
+    {
+        if(PacketsQueue.size()>0)
+        {
+            std::pair<Session*,EncapsulatedPacket> pks=PacketsQueue.front();
+            pks.first->streamEncapsulated(pks.second);
+            PacketsQueue.pop_front();
         }
     }
     bool tick()
     {
         double tickTime=GetStartTime();
-       if((tickTime - nextTick)<-0.025)return false;
+        if((tickTime - nextTick)<-0.025)return false;
 //==============TickContent===============
         ++tickCounter;
         if((tickCounter & 0b1111)==0)
             titleTick();
 //manager->processPackets();
-lock.lock();
+        lock.lock();
 
-if(players.size()>0){
-std::vector<Player *>::iterator iter;
-for(iter=players.begin();iter != players.end();++iter)
-{
-   (*iter)->checkNetwork();
-}
-}
-processPackets();
+        if(players.size()>0)
+        {
+            std::vector<Player *>::iterator iter;
+            for(iter=players.begin(); iter != players.end(); ++iter)
+            {
+                (*iter)->checkNetwork();
+            }
+        }
+        processPackets();
 
-lock.unlock();
+        lock.unlock();
 //==============TickContent===============
         double now = GetStartTime();
         double tick=std::min(20.0,1/std::max(0.001,now - tickTime));
         double use=std::min(1.0,(now-tickTime)/0.05);
 
- tickAverage[0]=tick;
-  useAverage[0]=use;
+        tickAverage[0]=tick;
+        useAverage[0]=use;
         for(int i=18; i>=0; i--)
             tickAverage[i+1]=tickAverage[i];
         for(int i=18; i>=0; i--)
