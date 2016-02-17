@@ -32,17 +32,28 @@ Session* SessionManager::getSession(string source,unsigned int port)
 
     map<string ,Session*>::iterator iter;
      iter=Sessions.find(source
-  +':'+writeInt(port));
+  +':'
+  +(char)((port>>24)&0xFF)
+  +(char)((port>>16)&0xFF)
+  +(char)((port>>8)&0xFF)
+  +(char)(port&0xFF)
+                            );
     if(iter==Sessions.end())
     {
 
         Session *newsess=new Session(this,source,port,server);
-  string key=source+':'+writeInt(port);
+  string key=source
+  +':'
+  +(char)((port>>24)&0xFF)
+  +(char)((port>>16)&0xFF)
+  +(char)((port>>8)&0xFF)
+  +(char)(port&0xFF);
         Sessions.insert(pair<string,Session*>(key,newsess));
         return newsess;
     }
     else {
     if(       iter->second->IsKeptConnection()){
+        std::cout<<"username="<<iter->second->PlayerClass->username<<std::endl;
 
     }
 
@@ -96,6 +107,7 @@ bool SessionManager::receivePacket()
     {
 
         p->buffer=buffer;
+ std::cout<<"sendport="<<port<<std::endl;
     getSession(source,port)->handlePacket(p);
  delete p; //pay attention to here;
 

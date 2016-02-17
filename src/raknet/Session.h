@@ -1,7 +1,7 @@
-#ifndef Sessionh
-#define Sessionh
-#include <iostream>
-
+#pragma once
+#include "../../include/Debuger.h"
+#include "protocol/BATCH_PACKET.hpp"
+#include "stdlib.h"
 #include "../../include/ExtraFuncs.h"
 #include "protocol/OPEN_CONNECTION_REQUEST_1.hpp"
 #include "protocol/OPEN_CONNECTION_REQUEST_2.hpp"
@@ -14,14 +14,19 @@
 #include "protocol/CLIENT_CONNECT_DataPacket.hpp"
 #include "protocol/SERVER_HANDSHAKE_DataPacket.hpp"
 #include "protocol/CLIENT_HANDSHAKE_DataPacket.hpp"
-#include "../Player.hpp"
 #include <vector>
 #include "protocol/ACK.hpp"
-
+#include <iostream>
+class Server;
 class SessionManager;
+class Player;//Amazing
 class Session
 {
     public:
+    process();
+    addEncapsulatedPacketToSendQueue(EncapsulatedPacket ENPK_);
+    addEncapsulatedPacketToHandleQueue(EncapsulatedPacket ENPK_);
+    Player* PlayerClass=nullptr;
     std::string address;
     unsigned int port;
     double lastUpdate;
@@ -33,25 +38,27 @@ class Session
     __int64 id=0;
     int sendSeqNumber=0;
     bool isActive;
-    sendPacket(Packet packet);
-    SessionManager* Manager;
-    handleEncapsulatedPacketRoute(EncapsulatedPacket packet);
-    Session(SessionManager* sessionManager_,std::string address_,unsigned int port_);
-    ~Session();
-    handlePacket(Packet* packet);
-    addToQueue(EncapsulatedPacket pk);
-    disconnect(std::string reason = "Unknown");
-    bool update(double time);
-    close();
-    Player *PlayerClass=nullptr;
-    keepPlayerConnection();
-    IsKeptConnection();
-    streamEncapsulated(EncapsulatedPacket packet);
-    Packet* getPacket(unsigned char pid1);
     std::vector<int> ACKQueue;
+    Server *server;
+SessionManager* Manager;
+Session(SessionManager* sessionManager_,std::string address_,unsigned int port_,Server *ser);
+~Session();
+handleEncapsulatedPacketRoute(EncapsulatedPacket packet);
+streamEncapsulated(EncapsulatedPacket packet);
 
+Packet* getPacket(unsigned char pid);
+keepPlayerConnection();
+processBatch(BATCH_PACKET *batchpk);
+
+IsKeptConnection();
+bool update(double time);
+close();
+disconnect(std::string reason);
+addToQueue(EncapsulatedPacket pk);
+sendPacket(Packet packet);
+handlePacket(Packet* packet);
     protected:
 
     private:
+
 };
-#endif

@@ -11,20 +11,26 @@
 #include "raknet/RakNetServer.hpp"
 #include <chrono>
 #include <thread>
+#include <mutex>
+#include <deque>
 class Server
 {
 public:
     std::vector<Player *>players;
+    const char ADD = 1;
+
+    std::mutex lock;
+    std::deque<std::pair<Session*,EncapsulatedPacket>> PacketsQueue;
+
     ThreadPool pool= ThreadPool(4);
+
     double nextTick=0;
     int tickCounter=0;
     bool isRunning=true;
     SessionManager* manager;
     Server()
     {
-
-//           SessionManager* manager= new SessionManager(new udpsocket(8888),this);
-        RakNetServer r;
+        RakNetServer r(this);
         pool.enqueueWork(&r);
         manager=r.getManager();
         tickProcessor();
@@ -35,7 +41,10 @@ public:
 
     addPlayer(Player * p)
     {
+
+    lock.lock();
         players.push_back(p);
+       lock.unlock();
     }
     double getTicksPerSecondAverage()
     {
@@ -69,6 +78,16 @@ public:
         str+="%";
         SetConsoleTitle(str.c_str());
     }
+    removePlayer(Player *p){
+lock.lock();
+  std::vector<Player *>::iterator iter= std::find(players.begin(),players.end(),p);
+if(iter!=players.end()){
+
+players.erase(iter);
+
+}
+lock.unlock();
+    }
     tickProcessor()
     {
         nextTick=GetStartTime();
@@ -76,11 +95,26 @@ public:
         {
             tick();
 double next=nextTick-GetStartTime();
-if(next>0)
-            std::this_thread::sleep_for(std::chrono::milliseconds((int)ceil(next)));
+if(next>0){
+            std::this_thread::sleep_for(std::chrono::milliseconds((int)ceil(next*1000)));
 
+}
         }
 
+    }
+    addToHandlePacketQueue(Session* ses,EncapsulatedPacket enpk_){
+ std::pair<Session*,EncapsulatedPacket> pks;
+ pks.first=ses;
+ pks.second=enpk_;
+ PacketsQueue.push_back(pks);
+
+    }
+    processPackets(){
+        if(PacketsQueue.size()>0){
+    std::pair<Session*,EncapsulatedPacket> pks=PacketsQueue.front();
+    pks.first->streamEncapsulated(pks.second);
+PacketsQueue.pop_front();
+        }
     }
     bool tick()
     {
@@ -90,7 +124,19 @@ if(next>0)
         ++tickCounter;
         if((tickCounter & 0b1111)==0)
             titleTick();
-manager->processPackets();
+//manager->processPackets();
+lock.lock();
+
+if(players.size()>0){
+std::vector<Player *>::iterator iter;
+for(iter=players.begin();iter != players.end();++iter)
+{
+   (*iter)->checkNetwork();
+}
+}
+processPackets();
+
+lock.unlock();
 //==============TickContent===============
         double now = GetStartTime();
         double tick=std::min(20.0,1/std::max(0.001,now - tickTime));

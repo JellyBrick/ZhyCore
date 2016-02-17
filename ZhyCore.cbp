@@ -5,6 +5,7 @@
 		<Option title="ZhyCore" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="src\raknet\protocol\;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/ZhyCore" prefix_auto="1" extension_auto="1" />
@@ -40,17 +41,20 @@
 		<Unit filename="include/SessionManager.h" />
 		<Unit filename="src/Debuger.cpp" />
 		<Unit filename="src/ExtraFuncs.cpp" />
+		<Unit filename="src/Level/Level.hpp" />
+		<Unit filename="src/Level/Vector3.hpp" />
 		<Unit filename="src/Player.hpp" />
 		<Unit filename="src/Server.hpp" />
 		<Unit filename="src/raknet/RakNetServer.hpp" />
 		<Unit filename="src/raknet/Session.cpp" />
 		<Unit filename="src/raknet/Session.h" />
 		<Unit filename="src/raknet/SessionManager.cpp" />
+		<Unit filename="src/raknet/datapackets/LoginPacket.hpp" />
+		<Unit filename="src/raknet/datapackets/PlayStatusPacket.hpp" />
+		<Unit filename="src/raknet/datapackets/StartGamePacket.hpp" />
 		<Unit filename="src/raknet/lib/cross_platform_socket.cpp" />
 		<Unit filename="src/raknet/lib/cross_platform_socket.h" />
 		<Unit filename="src/raknet/lib/socket_exception.h" />
-		<Unit filename="src/raknet/lib/udppacket.cpp" />
-		<Unit filename="src/raknet/lib/udppacket.h" />
 		<Unit filename="src/raknet/lib/udpsocket.cpp" />
 		<Unit filename="src/raknet/lib/udpsocket.h" />
 		<Unit filename="src/raknet/protocol/ACK.hpp" />
@@ -71,7 +75,20 @@
 		<Unit filename="src/raknet/protocol/UNCONNECTED_PONG.hpp" />
 		<Unit filename="src/scheduler/ThreadPool.cpp" />
 		<Unit filename="src/scheduler/ThreadPool.h" />
-		<Unit filename="src/utils/Binary.hpp" />
+		<Unit filename="src/utils/Binary.hpp">
+			<Option virtualFolder="src/raknet/protocol/" />
+		</Unit>
+		<Unit filename="src/utils/crc32.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/utils/crc32.h" />
+		<Unit filename="src/utils/inflate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/utils/inflate.h" />
+		<Unit filename="src/utils/inflate.hpp" />
+		<Unit filename="src/utils/zconf.h" />
+		<Unit filename="src/utils/zlib.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

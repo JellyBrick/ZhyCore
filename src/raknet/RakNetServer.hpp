@@ -5,15 +5,16 @@
 class RakNetServer : public ThreadPoolWorker
 {
 public:
-    RakNetServer()  {};
-    SessionManager *r;
+    Server *r;
+    SessionManager *sess;
+    RakNetServer(Server *ser)  {r=ser;};
+
     void operator()(){
-    r=new SessionManager(new udpsocket(8888));
+    sess=new SessionManager(new udpsocket(8888),r);
     }
     SessionManager* getManager(){
-    return r;
+        return sess;
     }
-
 
 
 protected:

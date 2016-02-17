@@ -10,13 +10,14 @@
 #include "../src/raknet/protocol/OPEN_CONNECTION_REQUEST_1.hpp"
 #include "../src/raknet/protocol/OPEN_CONNECTION_REQUEST_2.hpp"
 #include "../src/raknet/protocol/DataPacket.hpp"
+class Server;
 class Session;
 class SessionManager
 {
 public:
     Packet* getPacketFromPool(unsigned char pid);
     sendPacket(Packet* packet,std::string dest,int port);
-    SessionManager(udpsocket* _socket);
+    SessionManager(udpsocket* _socket,Server *ser);
     int tickProcessor(void);
     bool receivePacket();
     virtual ~SessionManager();

@@ -44,6 +44,27 @@ public:
 
         return buffer[offset++];
     }
+    UUiD getUUID(){
+    UUiD res;
+    res.data1=getLong();
+    res.data2=getLong();
+    }
+    std::string getString(){
+    return get(getShort());
+    }
+   putInt(int v){
+    buffer+=writeInt(v);
+    offset+=4;
+    }
+    putFloat(float v){
+    int r;
+    unsigned char ch[4];
+    memcpy(ch,&v,4);
+    memcpy(&r,ch,4);
+    buffer+=writeInt(r);
+offset+=4;
+
+    }
     std::string get(bool b)
     {
         if(!b)return "";

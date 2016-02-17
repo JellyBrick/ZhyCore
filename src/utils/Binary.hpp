@@ -1,6 +1,7 @@
 #ifndef binaryh
 #define binaryh
 #include "../../include/Debuger.h"
+#include <malloc.h>
 static std::string writeLong(__int64 v) {
 std::string res;
 
@@ -60,10 +61,10 @@ static short readShort(std::string v){
 }
 static std::string substr(std::string str,int start,int len){//wait to upgrade
 const char* chs=str.c_str();
-char* v= new char[str.size()];
+char* v= (char*)malloc(str.size());
 memcpy(v,chs+start,len);
 std::string res(v,len);
-delete[] v;
+free(v);
 return res;
 }
 static std::string writeInt(int v){

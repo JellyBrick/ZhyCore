@@ -7,7 +7,10 @@
 #include <iomanip>
 #include <unistd.h>
 #include <cstring>
-#include "utils/inflate.h"
+#include "utils/zlib.h"
+#define BUFLEN 32768
+Byte uncompr[BUFLEN];
+
 unsigned long long nanotime( void )
 {
     unsigned long long result=0;
@@ -41,7 +44,9 @@ case 3:
 return 0;
 }
 std::string zlib_decode(std::string data){
-
+uLongf len=BUFLEN;
+uncompress(uncompr,&len,(Bytef*)data.c_str(),data.size());
+return std::string((char*)uncompr,len);
 }
 std::string ctos(unsigned char i){
     if(i<=0)return "0";
