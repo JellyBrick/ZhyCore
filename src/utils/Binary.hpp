@@ -39,7 +39,7 @@ static std::string writeLTriad(short v)
     res+= ((char)((v >> 24) & 0xFF));
     return res;
 }
-static int readInt(std::string v)
+static int readInt(std::string const & v)
 {
 
     return ((v[0] & 0xff) << 24) +
@@ -48,7 +48,7 @@ static int readInt(std::string v)
            (v[3] & 0xff);
 
 }
-static int readLInt(std::string v)
+static int readLInt(std::string const & v)
 {
 
     return ((v[0] & 0xff) ) +
@@ -57,7 +57,7 @@ static int readLInt(std::string v)
            (v[3] & 0xff << 24);
 
 }
-static short readShort(std::string v)
+static short readShort(std::string const & v)
 {
     unsigned char aChar[2];
 
@@ -66,14 +66,11 @@ static short readShort(std::string v)
 
     return *(short*)aChar;
 }
-static std::string substr(std::string str,int start,int len) //wait to upgrade
+static std::string substr(std::string const &str,int start,int len)
 {
-    const char* chs=str.c_str();
-    char* v= (char*)malloc(str.size());
-    memcpy(v,chs+start,len);
-    std::string res(v,len);
-    free(v);
-    return res;
+    std::string tmpstr;
+    tmpstr.assign(str,start,len);
+    return tmpstr;
 }
 static std::string writeInt(int v)
 {
@@ -85,7 +82,7 @@ static std::string writeInt(int v)
     return res;
 }
 
-static int readTriad(std::string v)
+static int readTriad(std::string const & v)
 {
     std::string vv;
     vv+='\0';
@@ -95,7 +92,7 @@ static int readTriad(std::string v)
     return readInt(vv);
 }
 
-static int readLTriad(std::string v)
+static int readLTriad(std::string const & v)
 {
     std::string vv;
     vv+=v[0];

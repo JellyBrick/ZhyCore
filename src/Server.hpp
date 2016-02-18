@@ -12,16 +12,14 @@
 #include <chrono>
 #include <thread>
 #include <mutex>
-#include <deque>
+#include <list>
 class Server
 {
 public:
     std::vector<Player *>players;
     const char ADD = 1;
 
-    std::mutex lock;
-    std::deque<std::pair<Session*,EncapsulatedPacket>> PacketsQueue;
-
+    std::list<std::pair<Session*,EncapsulatedPacket>> PacketsQueue;
     ThreadPool pool= ThreadPool(4);
 
     double nextTick=0;
@@ -41,10 +39,8 @@ public:
 
     addPlayer(Player * p)
     {
-
-        lock.lock();
         players.push_back(p);
-        lock.unlock();
+
     }
     double getTicksPerSecondAverage()
     {
@@ -69,19 +65,24 @@ public:
     {
         char ch[32];
         char ch_[32];
+        char show[100];
         sprintf(ch,"%.3f",getTicksPerSecondAverage());
         sprintf(ch_,"%.3f",getTickUsageAverage());
-        std::string str;
-        str+="TPS ";
-        str+=ch;
-        str+=" | Load ";
-        str+=ch_;
-        str+="%";
-        SetConsoleTitle(str.c_str());
+        int offset=0;
+
+CharStrAppend(show,"TPS ",offset);
+CharStrAppend(show,ch,offset);
+CharStrAppend(show," | Load ",offset);
+CharStrAppend(show,ch_,offset);
+CharStrAppend(show,"%",offset);
+
+        show[offset]='\0';
+
+        SetConsoleTitle(show);
     }
     removePlayer(Player *p)
     {
-        lock.lock();
+
         std::vector<Player *>::iterator iter= std::find(players.begin(),players.end(),p);
         if(iter!=players.end())
         {
@@ -89,15 +90,18 @@ public:
             players.erase(iter);
 
         }
-        lock.unlock();
+
     }
     tickProcessor()
     {
         nextTick=GetStartTime();
         while(isRunning)
         {
+            double wasteTime=GetStartTime();
             tick();
-            double next=nextTick-GetStartTime();
+            //double next=nextTick-GetStartTime();buggy?
+            wasteTime-=GetStartTime();
+            double next=0.05+wasteTime;
             if(next>0)
             {
                 std::this_thread::sleep_for(std::chrono::milliseconds((int)ceil(next*1000)));
@@ -106,7 +110,8 @@ public:
         }
 
     }
-    addToHandlePacketQueue(Session* ses,EncapsulatedPacket enpk_)
+
+    addToHandlePacketQueue(Session* ses,EncapsulatedPacket const & enpk_)
     {
         std::pair<Session*,EncapsulatedPacket> pks;
         pks.first=ses;
@@ -116,24 +121,38 @@ public:
     }
     processPackets()
     {
-        if(PacketsQueue.size()>0)
+
+        while(PacketsQueue.size()>0)
         {
-            std::pair<Session*,EncapsulatedPacket> pks=PacketsQueue.front();
-            pks.first->streamEncapsulated(pks.second);
+           std::pair<Session*,EncapsulatedPacket> pk=PacketsQueue.front();
+           unsigned char pid=pk.second.buffer[0];
+if(pid==255){//Special Inside Pakcet
+switch( (unsigned char)pk.second.buffer[1]){
+case 1: //OpenSession
+pk.first->keepPlayerConnection();
+    break;
+case 2:
+    std::string tmpstr;
+    tmpstr.assign(pk.second.buffer,1,pk.second.buffer.size()-2);
+pk.first->losePlayerConnection(tmpstr);
+
+    break;
+}
+
+}else
+            pk.first->streamEncapsulated(pk.second);
             PacketsQueue.pop_front();
         }
     }
     bool tick()
     {
         double tickTime=GetStartTime();
-        if((tickTime - nextTick)<-0.025)return false;
+//if((tickTime - nextTick)<-0.025)return false;
 //==============TickContent===============
         ++tickCounter;
         if((tickCounter & 0b1111)==0)
             titleTick();
 //manager->processPackets();
-        lock.lock();
-
         if(players.size()>0)
         {
             std::vector<Player *>::iterator iter;
@@ -144,7 +163,6 @@ public:
         }
         processPackets();
 
-        lock.unlock();
 //==============TickContent===============
         double now = GetStartTime();
         double tick=std::min(20.0,1/std::max(0.001,now - tickTime));

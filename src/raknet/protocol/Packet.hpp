@@ -80,7 +80,7 @@ public:
         offset+=num;
         return substr(buffer,offset-num,num);
     }
-    put(std::string str)
+    put(std::string const & str)
     {
 
         buffer+=str;
@@ -90,7 +90,7 @@ public:
     {
         put(writeLong(v));
     }
-    putString(std::string str)
+    putString(std::string const & str)
     {
         putShort(str.size());
         put(str);
@@ -115,7 +115,7 @@ public:
         }
 
     }
-    putAddress(std::string addr,unsigned int port,char version=4)
+    putAddress(std::string const & addr,unsigned int port,char version=4)
     {
         putByte(version);
         if(version==4)

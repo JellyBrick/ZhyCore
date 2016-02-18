@@ -19,10 +19,14 @@ Session::Session(SessionManager* sessionManager_,std::string address_,unsigned i
 Session::~Session()
 {
     if(PlayerClass!=nullptr)
-        delete PlayerClass;
+      {
 
+      delete PlayerClass;
+
+        PlayerClass=nullptr;
+ }
 }
-Session::handleEncapsulatedPacketRoute(EncapsulatedPacket packet)
+Session::handleEncapsulatedPacketRoute(EncapsulatedPacket const & packet)
 {
 
 
@@ -57,10 +61,11 @@ Session::handleEncapsulatedPacketRoute(EncapsulatedPacket packet)
                 {
                     status = STATE_CONNECTED;
                     //isTemporal
-
-
-                    keepPlayerConnection();
-
+EncapsulatedPacket tmppk;
+tmppk.buffer="\xFF\x01";
+ if(!Dead)
+ server->addToHandlePacketQueue(this,tmppk);
+                  //  keepPlayerConnection();
                 }
             }
         }
@@ -73,13 +78,14 @@ Session::handleEncapsulatedPacketRoute(EncapsulatedPacket packet)
     }
     else if (status == STATE_CONNECTED)
     {
+        if(!Dead)
         server->addToHandlePacketQueue(this,packet);
 
         //    EncapsulatedPacketsToHandle.push_back(packet);
     }
 
 }
-Session::streamEncapsulated(EncapsulatedPacket packet)
+Session::streamEncapsulated(EncapsulatedPacket const & packet)
 {
     if(!IsKeptConnection())return 0;
     Packet* pk=getPacket(packet.buffer[0]);
@@ -91,7 +97,7 @@ Session::streamEncapsulated(EncapsulatedPacket packet)
         delete pk;
     }
 }
-Packet* Session::getPacket(unsigned char pid)
+Packet* Session::getPacket(unsigned char const & pid)
 {
     switch(pid)
     {
@@ -124,18 +130,20 @@ Session::keepPlayerConnection()
 }
 Session::processBatch(BATCH_PACKET *batchpk)
 {
-    std::string str=zlib_decode(batchpk->payload);
+    std::string str(zlib_decode(batchpk->payload));
 
     int offset=0;
     int len=str.size();
     while(offset<len)
     {
         int pkLen=readInt(substr(str,offset,4));
+        if(pkLen==0)break;
         offset+=4;
-        std::string buf=substr(str,offset,pkLen);
+        std::string buf;buf.resize(pkLen);
+        buf.assign(str,offset,pkLen);
         offset+=pkLen;
         if(buf[0]==BATCH_PACKET::ID)continue;//INVAILD batchpacket inside batchpacket
-        Packet* pk=getPacket(buf[0]);
+           Packet* pk=getPacket(buf[0]);
         if(pk!=nullptr)
         {
             pk->buffer=buf;
@@ -157,7 +165,8 @@ Session::IsKeptConnection()
 }
 bool Session::update(double time)
 {
-    if(!isActive and (lastUpdate + 5.0) < time)
+    if(Dead)return 0;
+   if(!isActive and (lastUpdate + 10.0) < time)
     {
 
         disconnect("timeout");
@@ -188,23 +197,28 @@ Session::close()
 }
 Session::disconnect(std::string reason)
 {
-
-    if(IsKeptConnection())
+    if(!Dead)
     {
 
-        PlayerClass->close();
-        server->removePlayer(PlayerClass);
-        delete PlayerClass;
-        PlayerClass=nullptr;
-        status=0;
 
-    }
+EncapsulatedPacket tmppk;
+tmppk.buffer="\xFF\x02"+reason;
+ server->addToHandlePacketQueue(this,tmppk);
+ Dead=true;
+ }
+}
+Session::losePlayerConnection(std::string reason){
+  if(IsKeptConnection())
+     {
+std::cout<<PlayerClass<<std::endl;
+       PlayerClass->close();
+     server->removePlayer(PlayerClass);}
+        status=0;
     Manager->removeSession(this,reason);
 
-
-
 }
-Session::addToQueue(EncapsulatedPacket pk)
+
+Session::addToQueue(EncapsulatedPacket const & pk)
 {
     DATA_PACKET_0 packet;
     packet.seqNumber=sendSeqNumber++;
@@ -213,7 +227,7 @@ Session::addToQueue(EncapsulatedPacket pk)
     sendPacket(packet);
 
 }
-Session::sendPacket(Packet packet)
+Session::sendPacket(Packet & packet)
 {
 
     Manager->sendPacket(&packet,address,port);

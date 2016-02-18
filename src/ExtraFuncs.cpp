@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <cstring>
 #include "utils/zlib.h"
-#define BUFLEN 32768
+#define BUFLEN 17000
 Byte uncompr[BUFLEN];
 
 unsigned long long nanotime( void )
@@ -47,12 +47,18 @@ unsigned char atoc(char *p) //return stream bytes
     }
     return 0;
 }
-std::string zlib_decode(std::string data)
+std::string zlib_decode(std::string const& data)
 {
     uLongf len=BUFLEN;
     uncompress(uncompr,&len,(Bytef*)data.c_str(),data.size());
     return std::string((char*)uncompr,len);
 }
+CharStrAppend(char charstr[],const char beapped[] ,int & offset){
+    int len=strlen(beapped);
+memcpy(charstr+offset,beapped,len);
+offset+=len;
+}
+
 std::string ctos(unsigned char i)
 {
     if(i<=0)return "0";

@@ -99,12 +99,7 @@ public:
         loadQueue=newOrder;
         return true;
     }
-    processPackets()
-    {
-
-        connection->process();
-    }
-    directDataPacket(Packet pk)
+    directDataPacket(Packet & pk)
     {
         pk.encode();
         EncapsulatedPacket enpka;
@@ -143,7 +138,7 @@ public:
 
             std::cout<<"[Info]"<<username<<" 加入了服务器"<<std::endl;
 
-            PlayStatusPacket PSP;
+           PlayStatusPacket PSP;
             PSP.status=0;
             PSP.encode();
             directDataPacket(PSP);

@@ -179,15 +179,16 @@ SessionManager::removeSession(Session* session,std::string reason)
     }*/
 
 
-
 }
 
 int SessionManager::tick()
 {
     double time=GetStartTime();
+     int count=0;
+     if(Sessions.size()>0)
     for(map<string,Session*>::iterator itr=Sessions.begin(); itr != Sessions.end(); ++itr)
     {
-        int count=0;
+
         map<string,Session*>::iterator bakup=++itr;
         itr--;
         if(!(itr->second->update(time)))itr=bakup;

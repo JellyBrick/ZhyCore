@@ -27,6 +27,7 @@ class Session
     addEncapsulatedPacketToSendQueue(EncapsulatedPacket ENPK_);
     addEncapsulatedPacketToHandleQueue(EncapsulatedPacket ENPK_);
     Player* PlayerClass=nullptr;
+    losePlayerConnection(std::string reason);
     std::string address;
     unsigned int port;
     double lastUpdate;
@@ -39,14 +40,15 @@ class Session
     int sendSeqNumber=0;
     bool isActive;
     std::vector<int> ACKQueue;
+    bool Dead=false;
     Server *server;
 SessionManager* Manager;
 Session(SessionManager* sessionManager_,std::string address_,unsigned int port_,Server *ser);
 ~Session();
-handleEncapsulatedPacketRoute(EncapsulatedPacket packet);
-streamEncapsulated(EncapsulatedPacket packet);
+handleEncapsulatedPacketRoute(EncapsulatedPacket const & packet);
+streamEncapsulated(EncapsulatedPacket const & packet);
 
-Packet* getPacket(unsigned char pid);
+Packet* getPacket(unsigned char const & pid);
 keepPlayerConnection();
 processBatch(BATCH_PACKET *batchpk);
 
@@ -54,8 +56,8 @@ IsKeptConnection();
 bool update(double time);
 close();
 disconnect(std::string reason);
-addToQueue(EncapsulatedPacket pk);
-sendPacket(Packet packet);
+addToQueue(EncapsulatedPacket const & pk);
+sendPacket(Packet & packet);
 handlePacket(Packet* packet);
     protected:
 
