@@ -12,7 +12,7 @@ public:
     std::vector<EncapsulatedPacket> packets;
     const char ID=-1;
     DataPacket() {};
-    virtual getID()
+    virtual int getID()
     {
         return ID;
     }

@@ -2,7 +2,7 @@
 #define binaryh
 #include "../../include/Debuger.h"
 #include <malloc.h>
-static std::string writeLong(__int64 v)
+static std::string writeLong(int64_t v)
 {
     std::string res;
 

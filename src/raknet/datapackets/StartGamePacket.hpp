@@ -11,7 +11,7 @@ public:
     unsigned char dimension;
     int generator;
     int gamemode;
-    __int64 eid;
+    int64_t eid;
     int spawnX;
     int spawnY;
     int spawnZ;

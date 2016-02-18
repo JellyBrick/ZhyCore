@@ -10,7 +10,7 @@ public:
     std::string username;
     int protocol1;
     int protocol2;
-    __int64 clientId;
+    int64_t clientId;
     UUiD clientUUID;
     std::string serverAddress;
     std::string clientSecret;

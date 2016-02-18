@@ -6,8 +6,8 @@ class CLIENT_CONNECT_DataPacket : public Packet
 {
 public:
     const static int ID=0x09;
-    __int64 clientID=0;
-    __int64 sendPing=0;
+    int64_t clientID=0;
+    int64_t sendPing=0;
     bool useSecurity=false;
     CLIENT_CONNECT_DataPacket() {};
     void encode()

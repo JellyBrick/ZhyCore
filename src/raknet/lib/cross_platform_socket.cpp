@@ -21,6 +21,7 @@ void sockets_layer_cleanup()
 
 static void sockets_layer_init()
 {
+
 #if PLATFORM == PLATFORM_WINDOWS
     WSADATA wsadata;
     if (WSAStartup(MAKEWORD(2, 2), &wsadata) != NO_ERROR)

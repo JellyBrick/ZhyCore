@@ -9,7 +9,7 @@ public:
     short mtuSize=0;
     std::string serverAddress;
     unsigned int serverPort;
-    __int64 clientID;
+    int64_t clientID;
 
     char protocol=Packet::PROTOCOL;
     OPEN_CONNECTION_REQUEST_2() {};

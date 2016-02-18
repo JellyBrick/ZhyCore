@@ -4,15 +4,15 @@
 
 struct UUiD
 {
-    __int64 data1;
-    __int64 data2;
+    int64_t data1;
+    int64_t data2;
 };
 
 double GetStartTime( void );
 float getMs(void);
 int mt_rand(int min,int max);
 std::string zlib_decode(std::string const& data);
-int CharStrAppend(char charstr[],const char beapped [],int & offset);
+void CharStrAppend(char charstr[],const char beapped [],int & offset);
 std::string ctos(unsigned char i);
 unsigned char atoc(char *p);
 

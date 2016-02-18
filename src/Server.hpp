@@ -6,7 +6,6 @@
 #include "Player.hpp"
 #include "../include/SessionManager.h"
 
-#include "windows.h"
 #include "scheduler/ThreadPool.h"
 #include "raknet/RakNetServer.hpp"
 #include <chrono>
@@ -78,7 +77,7 @@ public:
 
         show[offset]='\0';
 
-        SetConsoleTitle(show);
+        //      std::cout<<("\x1b]0;test\x07");
     }
     void removePlayer(Player *p)
     {

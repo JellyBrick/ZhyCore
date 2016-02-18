@@ -8,8 +8,8 @@ public:
     const static int ID=0x13;
     std::string address;
     unsigned int port=0;
-    __int64 sendPing;
-    __int64 sendPong;
+    int64_t sendPing;
+    int64_t sendPong;
     CLIENT_HANDSHAKE_DataPacket() {};
     void encode()
     {

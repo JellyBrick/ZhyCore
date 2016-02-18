@@ -36,7 +36,7 @@ public:
     const char STATE_CONNECTED=3;
     short mtuSize=512;
     char status=-1;
-    __int64 id=0;
+    int64_t id=0;
     int sendSeqNumber=0;
     bool isActive;
     std::vector<int> ACKQueue;

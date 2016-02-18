@@ -191,7 +191,7 @@ public:
         short* res=(short*)aChar;
         return *res;
     }
-    __int64 getLong()
+    int64_t getLong()
     {
         unsigned char aChar[8];
         aChar[7]=buffer[offset++];
@@ -202,7 +202,7 @@ public:
         aChar[2]=buffer[offset++];
         aChar[1]=buffer[offset++];
         aChar[0]=buffer[offset++];
-        __int64* res=(__int64*)aChar;
+        int64_t* res=(int64_t*)aChar;
         return *res;
 
     }

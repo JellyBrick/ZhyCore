@@ -7,7 +7,7 @@ class OPEN_CONNECTION_REPLY_1 : public Packet
 public:
     const static int ID=0x06;
     short mtuSize=0;
-    __int64 serverId=0;
+    int64_t serverId=0;
     OPEN_CONNECTION_REPLY_1() {};
     void encode()
     {

@@ -1,8 +1,6 @@
-
 #include "../../src/raknet/lib/udpsocket.h"
 #include "../../include/ExtraFuncs.h"
 #include <stdio.h>
-#include <windows.h>
 #include <iostream>
 
 #include "../../include/SessionManager.h"
@@ -10,6 +8,7 @@
 #include "protocol/DATA_PACKET_4.hpp"
 #include "../Server.hpp"
 #include <mutex>
+
 std::mutex sessionlock;
 using namespace std;
 map<string,Session*> Sessions;
@@ -17,9 +16,11 @@ Server *server;
 SessionManager::SessionManager(udpsocket* _socket,Server *ser)
 {
     server=ser;
-    serverId=mt_rand(0,INT_MAX);
+    serverId=mt_rand(0,99999999);
     socket=_socket;
+    std::cout<<"Session Manager Working..."<<std::endl;;
     tickProcessor();
+
 //    server=getTotalServer();
 }
 unsigned int SessionManager::getPort()
@@ -127,9 +128,10 @@ bool SessionManager::receivePacket()
 
 
 }
-__int64 SessionManager::getID()
+int64_t SessionManager::getID()
 {
     return serverId;
+}
 void SessionManager::sendPacket(Packet* packet,std::string dest,int port)
 {
 
@@ -189,16 +191,16 @@ void SessionManager::removeSession(Session* session,std::string reason)
 void SessionManager::tick()
 {
     double time=GetStartTime();
-     unsigned int count=0;
-     if(Sessions.size()>0)
-    for(map<string,Session*>::iterator itr=Sessions.begin(); itr != Sessions.end(); ++itr)
-    {
+    unsigned int count=0;
+    if(Sessions.size()>0)
+        for(map<string,Session*>::iterator itr=Sessions.begin(); itr != Sessions.end(); ++itr)
+        {
 
-        map<string,Session*>::iterator bakup=++itr;
-        itr--;
-        if(!(itr->second->update(time)))itr=bakup;
-        count++;
-        if(count>=Sessions.size())break;
-    }
+            map<string,Session*>::iterator bakup=++itr;
+            itr--;
+            if(!(itr->second->update(time)))itr=bakup;
+            count++;
+            if(count>=Sessions.size())break;
+        }
 
 }

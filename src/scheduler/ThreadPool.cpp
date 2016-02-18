@@ -23,7 +23,7 @@ SOFTWARE.
 #include <unistd.h>
 #include <assert.h>
 
-#include "threadpool.h"
+#include "ThreadPool.h"
 
 ThreadPool::ThreadPool(int _maxThreads)
 {

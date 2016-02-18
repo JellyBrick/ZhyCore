@@ -22,9 +22,9 @@ public:
     bool receivePacket();
     virtual ~SessionManager();
     udpsocket* socket;
-    __int64 serverId;
+    int64_t serverId;
     bool shutdown=false;
-    __int64 getID();
+    int64_t getID();
     Session* getSession(std::string source,unsigned int port);
     double lastMeasure;
     unsigned int getPort();

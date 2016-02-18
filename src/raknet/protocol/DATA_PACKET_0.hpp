@@ -8,7 +8,7 @@ class DATA_PACKET_0 : public DataPacket
 public:
     const static int ID=0x80;
     DATA_PACKET_0() {};
-    getID()
+    int getID()
     {
         return ID;
     }

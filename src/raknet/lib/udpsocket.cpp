@@ -4,7 +4,6 @@
 #include "socket_exception.h"
 #include <iostream>
 #include <cstdint>
-#include "udppacket.h"
 #include <stdio.h>
 #define MAX_BUFF 2048
 
@@ -29,8 +28,13 @@ udpsocket::udpsocket(int port)
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons((unsigned short) port);
+#if PLATFORM == PLATFORM_WINDOWS
     u_long mode = 1;
     ioctlsocket(_handle,FIONBIO,&mode);
+#elif PLATFORM == PLATFORM_UNIX
+    int flags = fcntl(_handle, F_GETFL, 0);
+    fcntl(_handle, F_SETFL, flags | O_NONBLOCK);
+#endif // PLATFORM
 
     if (bind(_handle, (const sockaddr *) &address, sizeof(sockaddr_in)) < 0)
     {
@@ -48,12 +52,12 @@ void udpsocket::writePacket(std::string address, unsigned short port,std::string
     addr.sin_addr.s_addr = inet_addr(address.c_str());
     addr.sin_port = htons(port);
 
-    int sent_bytes = sendto(_handle,
-                            data.c_str(),
-                            data.length(),
-                            0,
-                            (sockaddr *) &addr,
-                            sizeof(sockaddr_in));
+    unsigned int sent_bytes = sendto(_handle,
+                                     data.c_str(),
+                                     data.length(),
+                                     0,
+                                     (sockaddr *) &addr,
+                                     sizeof(sockaddr_in));
 //                           int sent_bytes=data.length();
     if (sent_bytes != data.length())
     {

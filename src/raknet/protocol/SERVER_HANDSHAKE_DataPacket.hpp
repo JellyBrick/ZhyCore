@@ -20,8 +20,8 @@ public:
      "0.0.0.0",
      "0.0.0.0"
     };*/
-    __int64 sendPing=0;
-    __int64 sendPong=0;
+    int64_t sendPing=0;
+    int64_t sendPong=0;
     SERVER_HANDSHAKE_DataPacket() {};
     void encode()
     {

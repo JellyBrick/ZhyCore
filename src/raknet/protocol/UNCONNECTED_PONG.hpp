@@ -10,7 +10,7 @@ public:
     const static int ID=0x1c;
     std::string serverName;
 
-    __int64 pingID;
+    int64_t pingID;
     UNCONNECTED_PONG() {};
     void encode()
     {

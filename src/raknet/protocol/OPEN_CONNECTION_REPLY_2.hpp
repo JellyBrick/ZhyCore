@@ -7,7 +7,7 @@ class OPEN_CONNECTION_REPLY_2 : public Packet
 public:
     const static int ID=0x08;
     short mtuSize=0;
-    __int64 serverId=0;
+    int64_t serverId=0;
     std::string clientAddress;
     unsigned int clientPort;
     OPEN_CONNECTION_REPLY_2() {};

@@ -110,7 +110,7 @@ public:
 
 
     }
-    Player(__int64 clientID_,std::string address_,unsigned int port_,Session *sess)
+    Player(int64_t clientID_,std::string address_,unsigned int port_,Session *sess)
     {
         connection=sess;
         gamemode=1;
@@ -136,7 +136,7 @@ public:
             LoginPacket*lgpk=dynamic_cast<LoginPacket*>(packet);
             username=lgpk->username;
 
-            std::cout<<"[Info]"<<username<<" ¼ÓÈëÁË·þÎñÆ÷"<<std::endl;
+            std::cout<<"[Info]"<<username<<" åŠ å…¥äº†æœåŠ¡å™¨"<<std::endl;
 
             PlayStatusPacket PSP;
             PSP.status=0;
@@ -167,7 +167,7 @@ public:
     }
     void close(std::string message = "", std::string reason = "generic reason", bool notify = true)
     {
-        std::cout<<"[Info]"<<username<<" ÍË³öÁË·þÎñÆ÷"<<std::endl;
+        std::cout<<"[Info]"<<username<<" é€€å‡ºäº†æœåŠ¡å™¨"<<std::endl;
         connection=nullptr;
     }
 
