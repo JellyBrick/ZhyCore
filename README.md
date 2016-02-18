@@ -1,6 +1,6 @@
 # ZhyCore
 
-[![Join the chat at https://gitter.im/ZhyMC/ZhyCore](https://badges.gitter.im/ZhyMC/ZhyCore.svg)](https://gitter.im/ZhyMC/ZhyCore?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/ZhyMC/ZhyCore](https://badges.gitter.im/ZhyMC/ZhyCore.svg)](https://gitter.im/ZhyMC/ZhyCore?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)<br/>
 ________________________________________________________________________<br/>
 <b>The project is a Server Software on Minecraft Pocket Edition written by C++!</b><br/>
 <br/>
