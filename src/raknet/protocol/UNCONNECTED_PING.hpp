@@ -8,13 +8,13 @@ public:
     const static int ID=0x01;
     __int64 pingID=0;
     UNCONNECTED_PING() {};
-    encode()
+    void encode()
     {
 
         Packet::encode();
 
     }
-    decode()
+    void decode()
     {
         Packet::decode();
         pingID=getLong();

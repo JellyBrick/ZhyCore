@@ -14,7 +14,7 @@ class Packet
 public:
     const static int ID=-1;
     const static char PROTOCOL=6;
-    int offset = 0;
+    unsigned int offset = 0;
     int sendTime=0;
     const std::string MAGIC= std::string ("\x00\xff\xff\x00\xfe\xfe\xfe\xfe\xfd\xfd\xfd\xfd\x12\x34\x56\x78",16);
     Packet() { };
@@ -24,15 +24,15 @@ public:
 
     }
     std::string buffer="";
-    virtual   encode()
+    virtual void encode()
     {
         offset=1;
     }
-    virtual  decode()
+    virtual void decode()
     {
         offset=1;
     }
-    putByte(char byte)
+    void putByte(char byte)
     {
 
         buffer+=byte;
@@ -49,17 +49,18 @@ public:
         UUiD res;
         res.data1=getLong();
         res.data2=getLong();
+        return res;
     }
     std::string getString()
     {
         return get(getShort());
     }
-    putInt(int v)
+    void putInt(int v)
     {
         buffer+=writeInt(v);
         offset+=4;
     }
-    putFloat(float v)
+    void putFloat(float v)
     {
         int r;
         unsigned char ch[4];
@@ -80,23 +81,23 @@ public:
         offset+=num;
         return substr(buffer,offset-num,num);
     }
-    put(std::string const & str)
+    void put(std::string const & str)
     {
 
         buffer+=str;
         offset+=str.size();
     }
-    putLong(long v)
+    void putLong(long v)
     {
         put(writeLong(v));
     }
-    putString(std::string const & str)
+    void putString(std::string const & str)
     {
         putShort(str.size());
         put(str);
 
     }
-    getAddress(std::string& addr,unsigned int& port)
+    void getAddress(std::string& addr,unsigned int& port)
     {
         unsigned char version=getByte();
 
@@ -115,7 +116,7 @@ public:
         }
 
     }
-    putAddress(std::string const & addr,unsigned int port,char version=4)
+    void putAddress(std::string const & addr,unsigned int port,char version=4)
     {
         putByte(version);
         if(version==4)
@@ -154,23 +155,23 @@ public:
     {
         return readLTriad(get(3));
     }
-    putLTriad(int v)
+    void putLTriad(int v)
     {
         return put(writeLTriad(v));
     }
 
-    putShort(short v)
+    void putShort(short v)
     {
         buffer+=(char)((v>>8)&0xFF);
         buffer+=(char)(v&0xFF);
         offset+=2;
 
     }
-    putMagic()
+    void putMagic()
     {
         put(MAGIC);
     }
-    hexdump(unsigned char *buf, const int num)
+    void hexdump(unsigned char *buf, const int num)
     {
         int i;
         for(i = 0; i < num; i++)
@@ -187,8 +188,8 @@ public:
 
         aChar[1]=buffer[offset++];
         aChar[0]=buffer[offset++];
-
-        return *(short*)aChar;
+        short* res=(short*)aChar;
+        return *res;
     }
     __int64 getLong()
     {
@@ -201,8 +202,8 @@ public:
         aChar[2]=buffer[offset++];
         aChar[1]=buffer[offset++];
         aChar[0]=buffer[offset++];
-
-        return *(__int64*)aChar;
+        __int64* res=(__int64*)aChar;
+        return *res;
 
     }
 

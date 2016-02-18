@@ -10,13 +10,13 @@ public:
     __int64 sendPing=0;
     bool useSecurity=false;
     CLIENT_CONNECT_DataPacket() {};
-    encode()
+    void encode()
     {
         Packet::encode();
         //TODO
 
     }
-    decode()
+    void decode()
     {
         Packet::decode();
         clientID=getLong();

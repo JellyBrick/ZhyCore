@@ -3,8 +3,8 @@
 class Level
 {
 public:
-    Vector3() {};
-    static int chunkHash(int chunkX,int chunkZ)
+    void Vector3() {};
+    static int chunkHash(__int64 chunkX,__int64 chunkZ)
     {
         return ((chunkX&0xFFFFFFFF)<<32)|(chunkZ&0xFFFFFFFF);
     }

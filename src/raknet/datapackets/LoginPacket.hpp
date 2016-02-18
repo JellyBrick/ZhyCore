@@ -19,13 +19,13 @@ public:
     std::string skin;
 
     LoginPacket() {};
-    encode()
+    void encode()
     {
         Packet::encode();
         //TODO
 
     }
-    decode()
+    void decode()
     {
         Packet::decode();
         username=getString();

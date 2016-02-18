@@ -23,7 +23,7 @@ public:
     __int64 sendPing=0;
     __int64 sendPong=0;
     SERVER_HANDSHAKE_DataPacket() {};
-    encode()
+    void encode()
     {
         Packet::encode();
         buffer+=ID;
@@ -39,7 +39,7 @@ public:
 
 
     }
-    decode()
+    void decode()
     {
         Packet::decode();
 

@@ -12,7 +12,7 @@ public:
 
     __int64 pingID;
     UNCONNECTED_PONG() {};
-    encode()
+    void encode()
     {
         Packet::encode();
         buffer+=ID;
@@ -21,7 +21,7 @@ public:
         putMagic();
         putString(serverName);
     }
-    decode()
+    void decode()
     {
         Packet::decode();
 

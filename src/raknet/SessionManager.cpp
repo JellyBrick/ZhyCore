@@ -9,7 +9,8 @@
 #include "../../include/Debuger.h"
 #include "protocol/DATA_PACKET_4.hpp"
 #include "../Server.hpp"
-
+#include <mutex>
+std::mutex sessionlock;
 using namespace std;
 map<string,Session*> Sessions;
 Server *server;
@@ -39,7 +40,9 @@ Session* SessionManager::getSession(string source,unsigned int port)
 
         Session *newsess=new Session(this,source,port,server);
         string key=source+':'+writeInt(port);
+        sessionlock.lock();
         Sessions.insert(pair<string,Session*>(key,newsess));
+        sessionlock.unlock();
         return newsess;
     }
     else
@@ -119,6 +122,7 @@ bool SessionManager::receivePacket()
         sendPacket(&pkk,source,port);
 
     }
+    return true;
 
 
 
@@ -126,8 +130,7 @@ bool SessionManager::receivePacket()
 __int64 SessionManager::getID()
 {
     return serverId;
-}
-SessionManager::sendPacket(Packet* packet,std::string dest,int port)
+void SessionManager::sendPacket(Packet* packet,std::string dest,int port)
 {
 
     socket->writePacket(dest,port,packet->buffer);
@@ -153,8 +156,9 @@ int SessionManager::tickProcessor()
 /*Server* SessionManager::getServer(){
 return server;
 }*/
-SessionManager::removeSession(Session* session,std::string reason)
+void SessionManager::removeSession(Session* session,std::string reason)
 {
+    sessionlock.lock();
     std::string addr = session->address;
     unsigned int port = session->port;
     string key=addr
@@ -170,6 +174,7 @@ SessionManager::removeSession(Session* session,std::string reason)
         Sessions.erase(iter);
         delete session;
     }
+    sessionlock.unlock();
     /*
 
      map<string ,Session*>::iterator iter=Sessions.find(key);
@@ -181,10 +186,10 @@ SessionManager::removeSession(Session* session,std::string reason)
 
 }
 
-int SessionManager::tick()
+void SessionManager::tick()
 {
     double time=GetStartTime();
-     int count=0;
+     unsigned int count=0;
      if(Sessions.size()>0)
     for(map<string,Session*>::iterator itr=Sessions.begin(); itr != Sessions.end(); ++itr)
     {

@@ -53,10 +53,11 @@ std::string zlib_decode(std::string const& data)
     uncompress(uncompr,&len,(Bytef*)data.c_str(),data.size());
     return std::string((char*)uncompr,len);
 }
-CharStrAppend(char charstr[],const char beapped[] ,int & offset){
+CharStrAppend(char charstr[],const char beapped[],int & offset)
+{
     int len=strlen(beapped);
-memcpy(charstr+offset,beapped,len);
-offset+=len;
+    memcpy(charstr+offset,beapped,len);
+    offset+=len;
 }
 
 std::string ctos(unsigned char i)

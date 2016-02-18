@@ -34,7 +34,7 @@ public:
         return v3;
 
     }
-    checkNetwork()
+    void checkNetwork()
     {
 
         nextChunkOrderRun--;
@@ -99,7 +99,7 @@ public:
         loadQueue=newOrder;
         return true;
     }
-    directDataPacket(Packet & pk)
+    void directDataPacket(Packet & pk)
     {
         pk.encode();
         EncapsulatedPacket enpka;
@@ -114,9 +114,9 @@ public:
     {
         connection=sess;
         gamemode=1;
-    };
+    }
 
-    handleDataPacket(Packet* packet)
+    void handleDataPacket(Packet* packet)
     {
         //std::cout<<(int)(unsigned char)packet->buffer[0]<<std::endl;
 
@@ -125,7 +125,7 @@ public:
         if(pid==BATCH_PACKET::ID)
         {
             connection->processBatch(dynamic_cast<BATCH_PACKET*>(packet));
-            return 0;
+            return;
         }
 
 
@@ -138,7 +138,7 @@ public:
 
             std::cout<<"[Info]"<<username<<" 加入了服务器"<<std::endl;
 
-           PlayStatusPacket PSP;
+            PlayStatusPacket PSP;
             PSP.status=0;
             PSP.encode();
             directDataPacket(PSP);
@@ -165,7 +165,7 @@ public:
         }
 
     }
-    close(std::string message = "", std::string reason = "generic reason", bool notify = true)
+    void close(std::string message = "", std::string reason = "generic reason", bool notify = true)
     {
         std::cout<<"[Info]"<<username<<" 退出了服务器"<<std::endl;
         connection=nullptr;

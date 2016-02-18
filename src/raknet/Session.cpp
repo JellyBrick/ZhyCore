@@ -19,14 +19,14 @@ Session::Session(SessionManager* sessionManager_,std::string address_,unsigned i
 Session::~Session()
 {
     if(PlayerClass!=nullptr)
-      {
+    {
 
-      delete PlayerClass;
+        delete PlayerClass;
 
         PlayerClass=nullptr;
- }
+    }
 }
-Session::handleEncapsulatedPacketRoute(EncapsulatedPacket const & packet)
+void Session::handleEncapsulatedPacketRoute(EncapsulatedPacket const & packet)
 {
 
 
@@ -61,11 +61,11 @@ Session::handleEncapsulatedPacketRoute(EncapsulatedPacket const & packet)
                 {
                     status = STATE_CONNECTED;
                     //isTemporal
-EncapsulatedPacket tmppk;
-tmppk.buffer="\xFF\x01";
- if(!Dead)
- server->addToHandlePacketQueue(this,tmppk);
-                  //  keepPlayerConnection();
+                    EncapsulatedPacket tmppk;
+                    tmppk.buffer="\xFF\x01";
+                    if(!Dead)
+                        server->addToHandlePacketQueue(this,tmppk);
+                    //  keepPlayerConnection();
                 }
             }
         }
@@ -79,15 +79,15 @@ tmppk.buffer="\xFF\x01";
     else if (status == STATE_CONNECTED)
     {
         if(!Dead)
-        server->addToHandlePacketQueue(this,packet);
+            server->addToHandlePacketQueue(this,packet);
 
         //    EncapsulatedPacketsToHandle.push_back(packet);
     }
 
 }
-Session::streamEncapsulated(EncapsulatedPacket const & packet)
+void Session::streamEncapsulated(EncapsulatedPacket const & packet)
 {
-    if(!IsKeptConnection())return 0;
+    if(!IsKeptConnection())return;
     Packet* pk=getPacket(packet.buffer[0]);
     if(pk!=nullptr)
     {
@@ -119,16 +119,16 @@ Packet* Session::getPacket(unsigned char const & pid)
     }
     return nullptr;
 }
-Session::keepPlayerConnection()
+void Session::keepPlayerConnection()
 {
 
-    if(IsKeptConnection())return 0;
+    if(IsKeptConnection())return;
 
     PlayerClass=new Player(id,address,port,this);
     server->addPlayer(PlayerClass);
 
 }
-Session::processBatch(BATCH_PACKET *batchpk)
+void Session::processBatch(BATCH_PACKET *batchpk)
 {
     std::string str(zlib_decode(batchpk->payload));
 
@@ -139,11 +139,12 @@ Session::processBatch(BATCH_PACKET *batchpk)
         int pkLen=readInt(substr(str,offset,4));
         if(pkLen==0)break;
         offset+=4;
-        std::string buf;buf.resize(pkLen);
+        std::string buf;
+        buf.resize(pkLen);
         buf.assign(str,offset,pkLen);
         offset+=pkLen;
         if(buf[0]==BATCH_PACKET::ID)continue;//INVAILD batchpacket inside batchpacket
-           Packet* pk=getPacket(buf[0]);
+        Packet* pk=getPacket(buf[0]);
         if(pk!=nullptr)
         {
             pk->buffer=buf;
@@ -159,14 +160,14 @@ Session::processBatch(BATCH_PACKET *batchpk)
 
 }
 
-Session::IsKeptConnection()
+bool Session::IsKeptConnection()
 {
     return PlayerClass!=nullptr;
 }
 bool Session::update(double time)
 {
     if(Dead)return 0;
-   if(!isActive and (lastUpdate + 10.0) < time)
+    if(!isActive and (lastUpdate + 10.0) < time)
     {
 
         disconnect("timeout");
@@ -187,7 +188,7 @@ bool Session::update(double time)
     }
     return true;
 }
-Session::close()
+void Session::close()
 {
 
     int offset=0;
@@ -195,30 +196,31 @@ Session::close()
     addToQueue(epk);
 
 }
-Session::disconnect(std::string reason)
+void Session::disconnect(std::string reason)
 {
     if(!Dead)
     {
 
 
-EncapsulatedPacket tmppk;
-tmppk.buffer="\xFF\x02"+reason;
- server->addToHandlePacketQueue(this,tmppk);
- Dead=true;
- }
+        EncapsulatedPacket tmppk;
+        tmppk.buffer="\xFF\x02"+reason;
+        server->addToHandlePacketQueue(this,tmppk);
+        Dead=true;
+    }
 }
-Session::losePlayerConnection(std::string reason){
-  if(IsKeptConnection())
-     {
-std::cout<<PlayerClass<<std::endl;
-       PlayerClass->close();
-     server->removePlayer(PlayerClass);}
-        status=0;
+void Session::losePlayerConnection(std::string reason)
+{
+    if(IsKeptConnection())
+    {
+        PlayerClass->close();
+        server->removePlayer(PlayerClass);
+    }
+    status=0;
     Manager->removeSession(this,reason);
 
 }
 
-Session::addToQueue(EncapsulatedPacket const & pk)
+void Session::addToQueue(EncapsulatedPacket const & pk)
 {
     DATA_PACKET_0 packet;
     packet.seqNumber=sendSeqNumber++;
@@ -227,13 +229,13 @@ Session::addToQueue(EncapsulatedPacket const & pk)
     sendPacket(packet);
 
 }
-Session::sendPacket(Packet & packet)
+void Session::sendPacket(Packet & packet)
 {
 
     Manager->sendPacket(&packet,address,port);
 }
 
-Session::handlePacket(Packet* packet)
+void Session::handlePacket(Packet* packet)
 {
 
     isActive=true;

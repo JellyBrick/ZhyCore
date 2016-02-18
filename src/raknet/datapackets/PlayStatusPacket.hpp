@@ -14,13 +14,13 @@ public:
     int status;
 
     PlayStatusPacket() {};
-    encode()
+    void encode()
     {
         Packet::encode();
         buffer+=ID;
         putInt(status);
     }
-    decode()
+    void decode()
     {
         Packet::decode();
 

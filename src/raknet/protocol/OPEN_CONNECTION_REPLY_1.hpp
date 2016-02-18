@@ -9,7 +9,7 @@ public:
     short mtuSize=0;
     __int64 serverId=0;
     OPEN_CONNECTION_REPLY_1() {};
-    encode()
+    void encode()
     {
         Packet::encode();
         buffer+=ID;
@@ -19,7 +19,7 @@ public:
         putShort(mtuSize);
 
     }
-    decode()
+    void decode()
     {
         Packet::decode();
 

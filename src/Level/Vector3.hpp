@@ -6,7 +6,7 @@ public:
     int x;
     int y;
     int z;
-    Vector3(int x_=NULL,int y_=NULL,int z_=NULL)
+    Vector3(int x_=0,int y_=0,int z_=0)
     {
         x=x_;
         y=y_;

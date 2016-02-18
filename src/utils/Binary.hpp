@@ -23,14 +23,14 @@ static std::string writeShort(short v)
     res+= ((char)((v) & 0xFF));
     return res;
 }
-static std::string writeTriad(short v)
+/*static std::string writeTriad(short v)
 {
     std::string res;
     res+=  ((char)((v >>  16) & 0xFF));
     res+=  ((char)((v >>  8) & 0xFF));
     res+= ((char)((v) & 0xFF));
     return res;
-}
+}*/
 static std::string writeLTriad(short v)
 {
     std::string res;
@@ -63,8 +63,8 @@ static short readShort(std::string const & v)
 
     aChar[1]=v[0];
     aChar[0]=v[1];
-
-    return *(short*)aChar;
+    short* res=(short *)aChar;
+    return *res;
 }
 static std::string substr(std::string const &str,int start,int len)
 {

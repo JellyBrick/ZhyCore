@@ -13,13 +13,13 @@ public:
 
     char protocol=Packet::PROTOCOL;
     OPEN_CONNECTION_REQUEST_2() {};
-    encode()
+    void encode()
     {
         Packet::encode();
         //TODO
 
     }
-    decode()
+    void decode()
     {
         Packet::decode();
         offset+=16  ;//???

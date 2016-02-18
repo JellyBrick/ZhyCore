@@ -8,12 +8,12 @@ public:
     const static int ID=0x92;
     std::string payload;
     BATCH_PACKET() {};
-    encode()
+    void encode()
     {
         Packet::encode();
 
     }
-    decode()
+    void decode()
     {
         Packet::decode();
         int size=getInt();

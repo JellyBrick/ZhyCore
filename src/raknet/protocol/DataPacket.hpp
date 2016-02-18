@@ -17,7 +17,7 @@ public:
         return ID;
     }
 
-    encode()
+    void encode()
     {
         buffer+=getID();
         Packet::encode();
@@ -29,7 +29,7 @@ public:
     }
 
 
-    decode()
+    void decode()
     {
         Packet::decode();
         seqNumber=getLTriad();

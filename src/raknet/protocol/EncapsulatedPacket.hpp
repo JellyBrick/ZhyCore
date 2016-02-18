@@ -13,15 +13,15 @@ public:
     int reliability;
     bool hasSplit = false;
     int length = 0;
-    int messageIndex = NULL;
-    int orderIndex = NULL;
-    int orderChannel = NULL;
-    int splitCount = NULL;
-    int splitID = NULL;
-    int splitIndex = NULL;
+    int messageIndex = 0;
+    int orderIndex = 0;
+    int orderChannel = 0;
+    int splitCount = 0;
+    int splitID = 0;
+    int splitIndex = 0;
     std::string buffer;
     bool needACK = false;
-    int identifierACK = NULL;
+    int identifierACK = 0;
 
     EncapsulatedPacket() {};
     std::string toBinary(bool internal=false)
@@ -57,7 +57,7 @@ public:
 
             length_=ceil(readShort(substr(binary,1,2))/8.0);
             offset=3;
-            packet.identifierACK=NULL;
+            packet.identifierACK=0;
         }
 
 

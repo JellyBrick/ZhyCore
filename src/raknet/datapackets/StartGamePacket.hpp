@@ -20,7 +20,7 @@ public:
     float z;
 
     StartGamePacket() {};
-    encode()
+    void encode()
     {
         Packet::encode();
         buffer+=ID;
@@ -39,7 +39,7 @@ public:
 
 
     }
-    decode()
+    void decode()
     {
         Packet::decode();
 

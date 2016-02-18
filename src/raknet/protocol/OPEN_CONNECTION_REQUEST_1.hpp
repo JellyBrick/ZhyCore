@@ -9,13 +9,13 @@ public:
     int mtuSize=0;
     char protocol=Packet::PROTOCOL;
     OPEN_CONNECTION_REQUEST_1() {};
-    encode()
+    void encode()
     {
         Packet::encode();
         //TODO
 
     }
-    decode()
+    void decode()
     {
         Packet::decode();
         offset+=16;

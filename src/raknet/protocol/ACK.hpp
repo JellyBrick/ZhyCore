@@ -11,7 +11,7 @@ public:
     std::vector<int> needACK;
     std::string payload="";
     ACK() {};
-    encode()
+    void encode()
     {
 
         Packet::encode();
@@ -22,7 +22,7 @@ public:
         int records=0;
         if(count>0)
         {
-            int pointer=1;
+            //int pointer=1;
             int start = *iter;
             int last = *iter;
 
@@ -71,7 +71,7 @@ public:
 
         buffer+=payload;
     }
-    decode()
+    void decode()
     {
         Packet::decode();
 

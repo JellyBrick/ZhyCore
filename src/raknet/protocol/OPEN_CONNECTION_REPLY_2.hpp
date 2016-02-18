@@ -11,7 +11,7 @@ public:
     std::string clientAddress;
     unsigned int clientPort;
     OPEN_CONNECTION_REPLY_2() {};
-    encode()
+    void encode()
     {
         Packet::encode();
         buffer+=ID;
@@ -21,7 +21,7 @@ public:
         putShort(mtuSize);
         putByte('\0');//server security
     }
-    decode()
+    void decode()
     {
         Packet::decode();
 

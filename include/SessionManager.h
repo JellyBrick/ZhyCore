@@ -16,7 +16,7 @@ class SessionManager
 {
 public:
     Packet* getPacketFromPool(unsigned char pid);
-    sendPacket(Packet* packet,std::string dest,int port);
+    void sendPacket(Packet* packet,std::string dest,int port);
     SessionManager(udpsocket* _socket,Server *ser);
     int tickProcessor(void);
     bool receivePacket();
@@ -28,9 +28,9 @@ public:
     Session* getSession(std::string source,unsigned int port);
     double lastMeasure;
     unsigned int getPort();
-    int tick();
-    removeSession(Session* session,std::string reason);
-    processPackets();
+    void tick();
+    void removeSession(Session* session,std::string reason);
+    void processPackets();
 protected:
 
 private:

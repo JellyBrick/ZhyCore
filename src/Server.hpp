@@ -37,7 +37,7 @@ public:
     double tickAverage[20]= {20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0,20.0};
     double useAverage[20]= {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-    addPlayer(Player * p)
+    void addPlayer(Player * p)
     {
         players.push_back(p);
 
@@ -61,7 +61,7 @@ public:
         // std::cout<<total<<std::endl;
         return (total/20.0)*100.0;
     }
-    titleTick()
+    void titleTick()
     {
         char ch[32];
         char ch_[32];
@@ -70,17 +70,17 @@ public:
         sprintf(ch_,"%.3f",getTickUsageAverage());
         int offset=0;
 
-CharStrAppend(show,"TPS ",offset);
-CharStrAppend(show,ch,offset);
-CharStrAppend(show," | Load ",offset);
-CharStrAppend(show,ch_,offset);
-CharStrAppend(show,"%",offset);
+        CharStrAppend(show,"TPS ",offset);
+        CharStrAppend(show,ch,offset);
+        CharStrAppend(show," | Load ",offset);
+        CharStrAppend(show,ch_,offset);
+        CharStrAppend(show,"%",offset);
 
         show[offset]='\0';
 
         SetConsoleTitle(show);
     }
-    removePlayer(Player *p)
+    void removePlayer(Player *p)
     {
 
         std::vector<Player *>::iterator iter= std::find(players.begin(),players.end(),p);
@@ -92,7 +92,7 @@ CharStrAppend(show,"%",offset);
         }
 
     }
-    tickProcessor()
+    void tickProcessor()
     {
         nextTick=GetStartTime();
         while(isRunning)
@@ -111,7 +111,7 @@ CharStrAppend(show,"%",offset);
 
     }
 
-    addToHandlePacketQueue(Session* ses,EncapsulatedPacket const & enpk_)
+    void addToHandlePacketQueue(Session* ses,EncapsulatedPacket const & enpk_)
     {
         std::pair<Session*,EncapsulatedPacket> pks;
         pks.first=ses;
@@ -119,28 +119,31 @@ CharStrAppend(show,"%",offset);
         PacketsQueue.push_back(pks);
 
     }
-    processPackets()
+    void processPackets()
     {
 
         while(PacketsQueue.size()>0)
         {
-           std::pair<Session*,EncapsulatedPacket> pk=PacketsQueue.front();
-           unsigned char pid=pk.second.buffer[0];
-if(pid==255){//Special Inside Pakcet
-switch( (unsigned char)pk.second.buffer[1]){
-case 1: //OpenSession
-pk.first->keepPlayerConnection();
-    break;
-case 2:
-    std::string tmpstr;
-    tmpstr.assign(pk.second.buffer,1,pk.second.buffer.size()-2);
-pk.first->losePlayerConnection(tmpstr);
+            std::pair<Session*,EncapsulatedPacket> pk=PacketsQueue.front();
+            unsigned char pid=pk.second.buffer[0];
+            if(pid==255) //Special Inside Pakcet
+            {
+                switch( (unsigned char)pk.second.buffer[1])
+                {
+                case 1: //OpenSession
+                    pk.first->keepPlayerConnection();
+                    break;
+                case 2://CloseSession
+                    std::string tmpstr;
+                    tmpstr.assign(pk.second.buffer,1,pk.second.buffer.size()-2);
+                    pk.first->losePlayerConnection(tmpstr);
 
-    break;
-}
+                    break;
+                }
 
-}else
-            pk.first->streamEncapsulated(pk.second);
+            }
+            else
+                pk.first->streamEncapsulated(pk.second);
             PacketsQueue.pop_front();
         }
     }
@@ -181,7 +184,7 @@ pk.first->losePlayerConnection(tmpstr);
         }
         else nextTick+=0.05;
 
-
+        return true;
     }
 
 protected:

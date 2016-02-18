@@ -11,13 +11,13 @@ public:
     __int64 sendPing;
     __int64 sendPong;
     CLIENT_HANDSHAKE_DataPacket() {};
-    encode()
+    void encode()
     {
         Packet::encode();
 
 
     }
-    decode()
+    void decode()
     {
         Packet::decode();
         getAddress(address,port);
