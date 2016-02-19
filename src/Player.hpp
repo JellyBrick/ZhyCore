@@ -136,7 +136,7 @@ public:
             LoginPacket*lgpk=dynamic_cast<LoginPacket*>(packet);
             username=lgpk->username;
 
-            std::cout<<"[Info]"<<username<<" 加入了服务器"<<std::endl;
+            std::cout<<"[Info]"<<username<<" joined the server."<<std::endl;
 
             PlayStatusPacket PSP;
             PSP.status=0;
@@ -167,7 +167,7 @@ public:
     }
     void close(std::string message = "", std::string reason = "generic reason", bool notify = true)
     {
-        std::cout<<"[Info]"<<username<<" 退出了服务器"<<std::endl;
+        std::cout<<"[Info]"<<username<<" left from the server."<<std::endl;
         connection=nullptr;
     }
 

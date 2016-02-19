@@ -158,17 +158,12 @@ int SessionManager::tickProcessor()
 /*Server* SessionManager::getServer(){
 return server;
 }*/
-void SessionManager::removeSession(Session* session,std::string reason)
+void SessionManager::removeSession(Session* session,std::string reason)//Little Lag DealWithIt
 {
     sessionlock.lock();
     std::string addr = session->address;
     unsigned int port = session->port;
-    string key=addr
-               +':'
-               +(char)((port>>24)&0xFF)
-               +(char)((port>>16)&0xFF)
-               +(char)((port>>8)&0xFF)
-               +(char)(port&0xFF);
+    string key=addr+':'+writeInt(port);
     session->close();
     map<string,Session*>::iterator iter= Sessions.find(key);
     if(iter!=Sessions.end())
@@ -192,7 +187,9 @@ void SessionManager::tick()
 {
     double time=GetStartTime();
     unsigned int count=0;
-    if(Sessions.size()>0)
+    if(!Sessions.empty()){
+            sessionlock.lock();
+            unsigned int size=Sessions.size();
         for(map<string,Session*>::iterator itr=Sessions.begin(); itr != Sessions.end(); ++itr)
         {
 
@@ -200,7 +197,9 @@ void SessionManager::tick()
             itr--;
             if(!(itr->second->update(time)))itr=bakup;
             count++;
-            if(count>=Sessions.size())break;
+            if(count>=size)break;
         }
+          sessionlock.unlock();
+    }
 
 }

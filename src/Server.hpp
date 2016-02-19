@@ -5,9 +5,13 @@
 #include "../include/ExtraFuncs.h"
 #include "Player.hpp"
 #include "../include/SessionManager.h"
-
 #include "scheduler/ThreadPool.h"
 #include "raknet/RakNetServer.hpp"
+
+#if PLATFORM == PLATFORM_WINDOWS
+#include "windows.h"
+#endif
+
 #include <chrono>
 #include <thread>
 #include <mutex>
@@ -76,7 +80,9 @@ public:
         CharStrAppend(show,"%",offset);
 
         show[offset]='\0';
-
+#if PLATFORM == PLATFORM_WINDOWS
+SetConsoleTitle(show);
+#endif // PLATFORM
         //      std::cout<<("\x1b]0;test\x07");
     }
     void removePlayer(Player *p)
@@ -120,9 +126,9 @@ public:
     }
     void processPackets()
     {
-
-        while(PacketsQueue.size()>0)
+        while(!PacketsQueue.empty())
         {
+
             std::pair<Session*,EncapsulatedPacket> pk=PacketsQueue.front();
             unsigned char pid=pk.second.buffer[0];
             if(pid==255) //Special Inside Pakcet
@@ -144,6 +150,7 @@ public:
             else
                 pk.first->streamEncapsulated(pk.second);
             PacketsQueue.pop_front();
+
         }
     }
     bool tick()
@@ -155,14 +162,14 @@ public:
         if((tickCounter & 0b1111)==0)
             titleTick();
 //manager->processPackets();
-        if(players.size()>0)
+      /*  if(players.size()>0)
         {
             std::vector<Player *>::iterator iter;
             for(iter=players.begin(); iter != players.end(); ++iter)
             {
                 (*iter)->checkNetwork();
             }
-        }
+        }*/
         processPackets();
 
 //==============TickContent===============

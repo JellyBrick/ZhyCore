@@ -93,7 +93,9 @@ void Session::streamEncapsulated(EncapsulatedPacket const & packet)
     {
         pk->buffer=packet.buffer;
         pk->decode();
-        PlayerClass->handleDataPacket(pk);
+
+
+       PlayerClass->handleDataPacket(pk);
         delete pk;
     }
 }
@@ -210,14 +212,15 @@ void Session::disconnect(std::string reason)
 }
 void Session::losePlayerConnection(std::string reason)
 {
+
     if(IsKeptConnection())
     {
         PlayerClass->close();
         server->removePlayer(PlayerClass);
     }
+
     status=0;
     Manager->removeSession(this,reason);
-
 }
 
 void Session::addToQueue(EncapsulatedPacket const & pk)

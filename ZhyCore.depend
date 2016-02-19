@@ -1,0 +1,272 @@
+# depslib dependency file v1.0
+1455810795 source:c:\users\administrator\desktop\zcore\zhycore\main.cpp
+	<iostream>
+	<stdlib.h>
+	<stdio.h>
+	"src/Server.hpp"
+
+1455891650 c:\users\administrator\desktop\zcore\zhycore\src\server.hpp
+	<iostream>
+	<vector>
+	"../include/ExtraFuncs.h"
+	"Player.hpp"
+	"../include/SessionManager.h"
+	"scheduler/ThreadPool.h"
+	"raknet/RakNetServer.hpp"
+	"windows.h"
+	<chrono>
+	<thread>
+	<mutex>
+	<list>
+
+1455826870 c:\users\administrator\desktop\zcore\zhycore\include\extrafuncs.h
+	"string"
+
+1455892084 c:\users\administrator\desktop\zcore\zhycore\src\player.hpp
+	<iostream>
+	<vector>
+	"raknet/protocol/Packet.hpp"
+	"raknet/protocol/BATCH_PACKET.hpp"
+	"raknet/datapackets/LoginPacket.hpp"
+	"raknet/datapackets/PlayStatusPacket.hpp"
+	"raknet/datapackets/StartGamePacket.hpp"
+	"raknet/protocol/EncapsulatedPacket.hpp"
+	"raknet/Session.h"
+	"Level/Level.hpp"
+	"Level/Vector3.hpp"
+
+1455826642 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\packet.hpp
+	<cstring>
+	"../../utils/Binary.hpp"
+	<vector>
+	<iostream>
+	<string>
+	"../../../include/ExtraFuncs.h"
+	<stdio.h>
+	<sstream>
+	"../../../include/Debuger.h"
+
+1455825460 c:\users\administrator\desktop\zcore\zhycore\src\utils\binary.hpp
+	"../../include/Debuger.h"
+	<malloc.h>
+
+1455810795 c:\users\administrator\desktop\zcore\zhycore\include\debuger.h
+	<string>
+
+1455810794 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\batch_packet.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455825461 c:\users\administrator\desktop\zcore\zhycore\src\raknet\datapackets\loginpacket.hpp
+	<iostream>
+	"../protocol/Packet.hpp"
+	"../../../include/ExtraFuncs.h"
+
+1455810795 c:\users\administrator\desktop\zcore\zhycore\src\raknet\datapackets\playstatuspacket.hpp
+	<iostream>
+	"../protocol/Packet.hpp"
+	"../../../include/ExtraFuncs.h"
+
+1455825461 c:\users\administrator\desktop\zcore\zhycore\src\raknet\datapackets\startgamepacket.hpp
+	<iostream>
+	"../protocol/Packet.hpp"
+	"../../../include/ExtraFuncs.h"
+
+1455810794 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\encapsulatedpacket.hpp
+	<iostream>
+	"Packet.hpp"
+	"../../../include/ExtraFuncs.h"
+	"math.h"
+	"../../../include/Debuger.h"
+	"../../utils/Binary.hpp"
+
+1455825462 c:\users\administrator\desktop\zcore\zhycore\src\raknet\session.h
+	"../../include/Debuger.h"
+	"protocol/BATCH_PACKET.hpp"
+	"stdlib.h"
+	"../../include/ExtraFuncs.h"
+	"protocol/OPEN_CONNECTION_REQUEST_1.hpp"
+	"protocol/OPEN_CONNECTION_REQUEST_2.hpp"
+	"../../include/SessionManager.h"
+	"protocol/OPEN_CONNECTION_REPLY_1.hpp"
+	"protocol/OPEN_CONNECTION_REPLY_2.hpp"
+	"protocol/DATA_PACKET_4.hpp"
+	"protocol/DATA_PACKET_0.hpp"
+	"protocol/EncapsulatedPacket.hpp"
+	"protocol/CLIENT_CONNECT_DataPacket.hpp"
+	"protocol/SERVER_HANDSHAKE_DataPacket.hpp"
+	"protocol/CLIENT_HANDSHAKE_DataPacket.hpp"
+	<vector>
+	"protocol/ACK.hpp"
+	<iostream>
+
+1455810794 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\open_connection_request_1.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455825461 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\open_connection_request_2.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455825462 c:\users\administrator\desktop\zcore\zhycore\include\sessionmanager.h
+	"../src/raknet/lib/udpsocket.h"
+	"ExtraFuncs.h"
+	"../src/raknet/protocol/Packet.hpp"
+	<map>
+	"../src/raknet/Session.h"
+	"../src/raknet/protocol/UNCONNECTED_PING.hpp"
+	"../src/raknet/protocol/UNCONNECTED_PONG.hpp"
+	"../src/raknet/protocol/OPEN_CONNECTION_REQUEST_1.hpp"
+	"../src/raknet/protocol/OPEN_CONNECTION_REQUEST_2.hpp"
+	"../src/raknet/protocol/DataPacket.hpp"
+
+1455810795 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udpsocket.h
+	<vector>
+	<memory>
+
+1455825461 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\unconnected_ping.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455825462 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\unconnected_pong.hpp
+	<iostream>
+	"Packet.hpp"
+	<string>
+
+1455826756 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\datapacket.hpp
+	<iostream>
+	"Packet.hpp"
+	<vector>
+	"../../utils/Binary.hpp"
+	"EncapsulatedPacket.hpp"
+
+1455825462 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\open_connection_reply_1.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455825462 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\open_connection_reply_2.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455826760 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\data_packet_4.hpp
+	<iostream>
+	"Packet.hpp"
+	"DataPacket.hpp"
+
+1455826762 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\data_packet_0.hpp
+	<iostream>
+	"Packet.hpp"
+	"DataPacket.hpp"
+
+1455825461 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\client_connect_datapacket.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455825462 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\server_handshake_datapacket.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455825462 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\client_handshake_datapacket.hpp
+	<iostream>
+	"Packet.hpp"
+
+1455810794 c:\users\administrator\desktop\zcore\zhycore\src\raknet\protocol\ack.hpp
+	<iostream>
+	"Packet.hpp"
+	<vector>
+	<algorithm>
+
+1455825462 c:\users\administrator\desktop\zcore\zhycore\src\level\level.hpp
+	"../../include/ExtraFuncs.h"
+
+1455810795 c:\users\administrator\desktop\zcore\zhycore\src\level\vector3.hpp
+
+1455810795 c:\users\administrator\desktop\zcore\zhycore\src\scheduler\threadpool.h
+	<pthread.h>
+	<semaphore.h>
+	<queue>
+	<vector>
+
+1455810795 c:\users\administrator\desktop\zcore\zhycore\src\raknet\raknetserver.hpp
+	"../scheduler/ThreadPool.h"
+	"../../include/SessionManager.h"
+
+1455810795 source:c:\users\administrator\desktop\zcore\zhycore\src\debuger.cpp
+	"../include/Debuger.h"
+	<iostream>
+	<string>
+
+1455833116 source:c:\users\administrator\desktop\zcore\zhycore\src\extrafuncs.cpp
+	"../include/ExtraFuncs.h"
+	<time.h>
+	<cstdlib>
+	<iostream>
+	<iomanip>
+	<unistd.h>
+	<cstring>
+	"utils/zlib.h"
+
+1455810794 c:\users\administrator\desktop\zcore\zhycore\src\utils\zlib.h
+	"zconf.h"
+
+1455810795 c:\users\administrator\desktop\zcore\zhycore\src\utils\zconf.h
+	<windows.h>
+	<limits.h>
+	<sys/types.h>
+	<stdarg.h>
+	<stddef.h>
+	<unistd.h>
+	<unixio.h>
+
+1455827528 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\cross_platform_socket.cpp
+	"cross_platform_socket.h"
+
+1455827195 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\cross_platform_socket.h
+	<winsock2.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<fcntl.h>
+	<arpa/inet.h>
+	<sys/ioctl.h>
+
+1455833154 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\udpsocket.cpp
+	"udpsocket.h"
+	"cross_platform_socket.h"
+	"socket_exception.h"
+	<iostream>
+	<cstdint>
+	<stdio.h>
+
+1455810795 c:\users\administrator\desktop\zcore\zhycore\src\raknet\lib\socket_exception.h
+	<exception>
+
+1455891921 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\session.cpp
+	"../../src/raknet/Session.h"
+	"../../include/Debuger.h"
+	"protocol/BATCH_PACKET.hpp"
+	"datapackets/LoginPacket.hpp"
+	"../Player.hpp"
+	"stdlib.h"
+	"../Server.hpp"
+	<list>
+	<iostream>
+	<mutex>
+
+1455891635 source:c:\users\administrator\desktop\zcore\zhycore\src\raknet\sessionmanager.cpp
+	"../../src/raknet/lib/udpsocket.h"
+	"../../include/ExtraFuncs.h"
+	<stdio.h>
+	<iostream>
+	"../../include/SessionManager.h"
+	"../../include/Debuger.h"
+	"protocol/DATA_PACKET_4.hpp"
+	"../Server.hpp"
+	<mutex>
+
+1455825195 source:c:\users\administrator\desktop\zcore\zhycore\src\scheduler\threadpool.cpp
+	<stdlib.h>
+	<stdio.h>
+	<unistd.h>
+	<assert.h>
+	"ThreadPool.h"
+
